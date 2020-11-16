@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  devtools:
+    restart:
+      enabled: true
+  mail:
+    username: 1462718182@qq.com  #修改为自己的邮箱
+    password: bjfwqtyzytuphajb  #授权码（第三步中生成的授权码）
+    host: smtp.qq.com  #发送邮件的服务主机
+    properties:
+      mail: 
+        smtp: 
+          ssl: 
+            enable: true  #开启ssl安全
+  datasource:
+    username: root 
+    password:   #修改为自己的数据库密码
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/issue?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+    url: jdbc:mysql://localhost:3306/issue?ullNamePatternMatchesAll=true&amp&serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf8
+    
+mybatis:
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件位置
+  mapper-locations: classpath:mybatis/mapper/*.xml  
+  type-aliases-package: com.ibm.issue
+  
+logging:
+   level:
+     com.ibm.springboot.controller.LoggingController: trace  #设置输出级别
+
+# 1.不指定路径时会在当前项目下生成springboot.log日志
+# 2.可以指定完整的路径,如：D:/springboot.log
+   file: springboot.log
+  
+
+    
