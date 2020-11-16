@@ -1,5 +1,5 @@
 package com.ibm.issue.service;
 
-public class UserService {
+public class SignInUp {
 
 }

@@ -1,12 +1,5 @@
 server:
   port: 8080
-  servlet:
-    encoding:
-      enabled: true
-      force: true
-      charset: UTF-8
-  tomcat:
-    uri-encoding: UTF-8
 spring:
   devtools:
     restart:
@@ -22,14 +15,13 @@ spring:
             enable: true  #开启ssl安全
   datasource:
     username: root 
-    password:   #修改为自己的数据库密码
+    password: root  #修改为自己的数据库密码
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://localhost:3306/issue?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT
-    url: jdbc:mysql://localhost:3306/issue?ullNamePatternMatchesAll=true&amp&serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/issue?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
     
 mybatis:
   # 指定全局配置文件位置
-  config-location: classpath:mybatis/mybatis-config.xml
+  #config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置
   mapper-locations: classpath:mybatis/mapper/*.xml  
   type-aliases-package: com.ibm.issue
