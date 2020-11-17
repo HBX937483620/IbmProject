@@ -4,6 +4,8 @@ package com.ibm.issue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm.issue.pojo.User;
@@ -19,6 +21,11 @@ public class UserController {
 	@GetMapping("/getUser")
 	public User getUser() {
 		return userService.getUser();
+	}
+	
+	@PostMapping("/updateUser")
+	public Integer updateUser(@RequestBody User user) {
+		return userService.updateUser(user);
 	}
 	
 	
