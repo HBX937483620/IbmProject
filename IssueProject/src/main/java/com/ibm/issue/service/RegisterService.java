@@ -40,20 +40,39 @@ public class RegisterService {
 		List<User> isExist = userMapper.selectByExample(userExample);
 		return isExist.isEmpty();
 	}
-	
-	public Boolean login(User user) {
+	/**
+	 * 登录功能实现（用户是否存在，是否为激活状态，密码是否正确）
+	 * @param user
+	 * @return
+	 */
+	public Integer login(User user) {
+		//查询用户信息
 		UserExample userExample = new UserExample();
 		Criteria userLogIn = userExample.createCriteria();
-//		System.out.println(user.getUserid());
 		userLogIn.andUseridEqualTo(user.getUserid());
 		List<User> userFind = userMapper.selectByExample(userExample);
-//		System.out.println(userFind.get(0).getPassword());
-//		System.out.println(user.getPassword() == userFind.get(0).getPassword());
-		if (userFind.get(0).getPassword().equals(user.getPassword())) {
-			return true;
+		
+		
+		//判断是否为空
+		if (userFind.isEmpty()) {
+			return 0;
 		}else {
-			return false;
+			
+			String password = userFind.get(0).getPassword();  //正确的密码
+			String inputPassword = user.getPassword();   //用户输入的密码
+			String userstate = userFind.get(0).getUserstate();  //用户状态
+			System.out.println(userstate);
+			//判断密码是否正确和状态是否为激活
+			if (password.equals(inputPassword) && userstate.equalsIgnoreCase("激活")){
+				return 1;
+			}else if (password.equals(inputPassword) && userstate.equalsIgnoreCase("注销")) {
+				return 2;
+			}else {
+				return -1;
+			}
 		}
+		
+		
 		
 	}
 }
