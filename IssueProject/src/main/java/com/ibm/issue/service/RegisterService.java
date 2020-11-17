@@ -1,6 +1,7 @@
 package com.ibm.issue.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,44 @@ public class RegisterService {
 	@Autowired
 	private UserMapper userMapper;
 	
-	public Integer login(User user) {
+	/**
+	 * 注册功能
+	 * @param user
+	 * @return
+	 */
+	public Integer register(User user) {
 		Date date = new Date(System.currentTimeMillis());
 		user.setSignup(date);
 		int result = userMapper.insert(user);
 		return result;
+	}
+	
+	/**
+	 * 查询userid（账号）是否存在
+	 * @param user
+	 * @return
+	 */
+	public Boolean isExistId(User user) {
+		UserExample userExample = new UserExample();
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andUseridEqualTo(user.getUserid());
+		List<User> isExist = userMapper.selectByExample(userExample);
+		return isExist.isEmpty();
+	}
+	
+	public Boolean login(User user) {
+		UserExample userExample = new UserExample();
+		Criteria userLogIn = userExample.createCriteria();
+//		System.out.println(user.getUserid());
+		userLogIn.andUseridEqualTo(user.getUserid());
+		List<User> userFind = userMapper.selectByExample(userExample);
+//		System.out.println(userFind.get(0).getPassword());
+//		System.out.println(user.getPassword() == userFind.get(0).getPassword());
+		if (userFind.get(0).getPassword().equals(user.getPassword())) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 }

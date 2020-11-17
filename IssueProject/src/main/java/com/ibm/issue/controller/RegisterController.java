@@ -10,14 +10,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm.issue.pojo.User;
 import com.ibm.issue.service.RegisterService;
 
-@RestController("register")
+@RestController
 public class RegisterController {
 	
 	@Autowired
 	private RegisterService registerService;
 	
+	@PostMapping("register")
+	public Integer register(@RequestBody User user) {
+		return registerService.register(user);
+	}
+	
+	@PostMapping("isExistId")
+	public Boolean isExistId(@RequestBody User user) {
+		return !registerService.isExistId(user);
+	}
+	
 	@PostMapping("login")
-	public Integer login(@RequestBody User user) {
+	public Boolean login(@RequestBody User user) {
 		return registerService.login(user);
 	}
 }
