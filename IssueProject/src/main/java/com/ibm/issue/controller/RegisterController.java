@@ -25,9 +25,4 @@ public class RegisterController {
 	public Boolean isExistId(@RequestBody User user) {
 		return !registerService.isExistId(user);
 	}
-	
-	@PostMapping("login")
-	public Boolean login(@RequestBody User user) {
-		return registerService.login(user);
-	}
 }
