@@ -8,18 +8,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm.issue.pojo.Report;
-import com.ibm.issue.service.IssueService;
+import com.ibm.issue.pojo.ReportWithBLOBs;
+import com.ibm.issue.service.ReportService;
  
 
 @RestController
-public class IssueController {
+public class ReportController {
 	@Autowired
-	private IssueService issueService;
+	private ReportService reportService;
 	
-	@PostMapping("createIsseu")
-	public Report create(@RequestBody Report issue) {
-		return null;	
+	@PostMapping("createReport")
+	public Report create(@RequestBody ReportWithBLOBs issue ) {
+		return reportService.createReport(issue);	
 	}
+	
+	
 	
 
 	
