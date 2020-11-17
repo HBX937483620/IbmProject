@@ -27,7 +27,7 @@ public class RegisterController {
 	}
 	
 	@PostMapping("login")
-	public Integer login(@RequestBody User user) {
+	public String login(@RequestBody User user) {
 		return registerService.login(user);
 	}
 }
