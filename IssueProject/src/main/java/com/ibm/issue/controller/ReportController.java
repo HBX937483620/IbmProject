@@ -18,7 +18,7 @@ public class ReportController {
 	private ReportService reportService;
 	
 	@PostMapping("createReport")
-	public Report create(@RequestBody ReportWithBLOBs issue ) {
+	public Integer create(@RequestBody ReportWithBLOBs issue ) {
 		return reportService.createReport(issue);	
 	}
 	
