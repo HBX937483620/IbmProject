@@ -41,13 +41,19 @@ public class RegisterService {
 		return isExist.isEmpty();
 	}
 	
-//	public Boolean login(User user) {
-//		UserExample userExample = new UserExample();
-//		Criteria userLogIn = userExample.createCriteria();
-//		userLogIn.andUseridEqualTo(user.getUserid());
-//		List<User> userFind = userMapper.selectByExample(userExample);
-//		
-//		userFind.get(0).getPassword() == user.getPassword();
-//		return true;
-//	}
+	public Boolean login(User user) {
+		UserExample userExample = new UserExample();
+		Criteria userLogIn = userExample.createCriteria();
+//		System.out.println(user.getUserid());
+		userLogIn.andUseridEqualTo(user.getUserid());
+		List<User> userFind = userMapper.selectByExample(userExample);
+//		System.out.println(userFind.get(0).getPassword());
+//		System.out.println(user.getPassword() == userFind.get(0).getPassword());
+		if (userFind.get(0).getPassword().equals(user.getPassword())) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 }
