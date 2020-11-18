@@ -54,7 +54,7 @@ public class ReportService {
 		return null;
 	}
 	
-//	issue表模糊查询
+    //issue表模糊查询
 	public List<Report> queryReport(ReportWithBLOBs issue) {
 		String issueid = issue.getIssueid();
 		String creator = issue.getCreator();

@@ -22,4 +22,14 @@ public class AdminController {
 	public String selectLikeByNameOrId(@RequestBody UserPage userPage) {
 		return adminSercice.selectLikeByNameOrId(userPage);
 	}
+	
+	@RequestMapping(value = "trans")
+	public int transToManager(@RequestBody User user) {
+		return adminSercice.transToManager(user);
+	}
+	
+	@RequestMapping(value="delete")
+	public int deleteUser(User user) {
+		return adminSercice.deleteUser(user);
+	}
 }
