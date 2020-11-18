@@ -47,6 +47,7 @@ public class RegisterService {
 	 */
 	public String login(User user) {
 		//查询用户信息
+		String flag;
 		UserExample userExample = new UserExample();
 		Criteria userLogIn = userExample.createCriteria();
 		userLogIn.andUseridEqualTo(user.getUserid());
@@ -55,7 +56,8 @@ public class RegisterService {
 		
 		//判断是否为空
 		if (userFind.isEmpty()) {
-			return "0";
+			flag="0";
+			return flag;
 		}else {
 			
 			String password = userFind.get(0).getPassword();  //正确的密码
@@ -64,11 +66,15 @@ public class RegisterService {
 			System.out.println(userstate);
 			//判断密码是否正确和状态是否为激活
 			if (password.equals(inputPassword) && userstate.equalsIgnoreCase("激活")){
-				return "{\"name\":" +userFind.get(0).getName()+ ",\"password\":"+userFind.get(0).getPermission()+"}";
+				flag = "1";
+				return "{\"name\":\"" +userFind.get(0).getName()+ "\",\"permission\":\""
+			+userFind.get(0).getPermission()+"\",\"flag\":\""+flag+"\"}";
 			}else if (password.equals(inputPassword) && userstate.equalsIgnoreCase("注销")) {
-				return "2";
+				flag="2";
+				return flag;
 			}else {
-				return "-1";
+				flag="-1";
+				return flag;
 			}
 		}
 		

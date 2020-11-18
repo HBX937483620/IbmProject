@@ -92,7 +92,25 @@ public class User implements Serializable {
      *
      * @mbg.generated
      */
-    public Integer getId() {
+    
+    
+    /**
+          * 多表查询
+     * @return
+     */
+    private Identity identity;
+    
+    
+    
+    public Identity getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(Identity identity) {
+		this.identity = identity;
+	}
+
+	public Integer getId() {
         return id;
     }
 
