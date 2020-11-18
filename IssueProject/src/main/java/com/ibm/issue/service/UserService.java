@@ -37,24 +37,24 @@ public class UserService {
 		Criteria updateUser = userExample.createCriteria();
 		updateUser.andUseridEqualTo(user.getUserid());
 		
-		//执行修改语句保存到数据库
-		int isUpdate = userMapper.updateByExampleSelective(user, userExample);
-		return isUpdate;
-		
-		
 		//查询原用户信息
-//		List<User> userFind = userMapper.selectByExample(userExample);
-//		User userGet = userFind.get(0);		
+		List<User> userFind = userMapper.selectByExample(userExample);
+		User userGet = userFind.get(0);
 		//修改
-//		if (user.getName() != null) {
-//			userGet.setName(user.getName());
-//		}
-//		if (user.getEmail() != null) {
-//			userGet.setEmail(user.getEmail());
-//		}
-//		if (user.getPassword() != null) {
-//			userGet.setPassword(user.getPassword());
-//		}
+		if (user.getName() != null) {
+			userGet.setName(user.getName());
+		}
+		if (user.getEmail() != null) {
+			userGet.setEmail(user.getEmail());
+		}
+		if (user.getPassword() != null) {
+			userGet.setPassword(user.getPassword());
+		}
 		
+		//执行修改语句保存到数据库
+				int isUpdate = userMapper.updateByExampleSelective(user, userExample);
+				return isUpdate;
 	}
+	
+	
 }

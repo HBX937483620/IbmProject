@@ -53,4 +53,18 @@ public class AdminSercice {
         String json = "{\"total\":"+total+",\"rows\":"+list+" }";
 		return json;
 	}
+	
+	public Integer transToManager(User user) {
+		
+		User selectByPrimaryKey = userMapper.selectByPrimaryKey(user.getId());
+		selectByPrimaryKey.setPermission(2);
+		int updateByPrimaryKey = userMapper.updateByPrimaryKey(selectByPrimaryKey);
+		
+		return updateByPrimaryKey;
+	}
+	
+	public Integer deleteUser(User user) {
+		int deleteByPrimaryKey = userMapper.deleteByPrimaryKey(user.getId());
+		return deleteByPrimaryKey;
+	}
 }
