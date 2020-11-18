@@ -86,7 +86,7 @@ public class ReportService {
 		else if (createdate == null && createdate2 != null) {
 			queryReport.andCreatedateLessThanOrEqualTo(createdate2);
 		}
-		else (createdate != null && createdate2 == null) {
+		else if(createdate!= null && createdate2 == null) {
 			queryReport.andCreatedateGreaterThanOrEqualTo(createdate);
 		}
 		////////////////////////////
@@ -96,7 +96,7 @@ public class ReportService {
 		else if (endDate == null && endDate2 != null) {
 			queryReport.andCreatedateLessThanOrEqualTo(endDate2);
 		}
-		else (endDate != null && endDate2 == null) {
+		else if(endDate != null && endDate2 == null) {
 			queryReport.andCreatedateGreaterThanOrEqualTo(endDate);
 		}
 		////////////////////////////
