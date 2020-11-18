@@ -83,20 +83,20 @@ public class ReportService {
 		if (createdate != null && createdate2 != null) {
 			queryReport.andCreatedateBetween(createdate, createdate2);
 		}
-		if (createdate == null && createdate2 != null) {
+		else if (createdate == null && createdate2 != null) {
 			queryReport.andCreatedateLessThanOrEqualTo(createdate2);
 		}
-		if (createdate != null && createdate2 == null) {
+		else (createdate != null && createdate2 == null) {
 			queryReport.andCreatedateGreaterThanOrEqualTo(createdate);
 		}
 		////////////////////////////
 		if (endDate != null && endDate2 != null) {
 			queryReport.andCreatedateBetween(endDate, endDate2);
 		}
-		if (endDate == null && endDate2 != null) {
+		else if (endDate == null && endDate2 != null) {
 			queryReport.andCreatedateLessThanOrEqualTo(endDate2);
 		}
-		if (endDate != null && endDate2 == null) {
+		else (endDate != null && endDate2 == null) {
 			queryReport.andCreatedateGreaterThanOrEqualTo(endDate);
 		}
 		////////////////////////////
