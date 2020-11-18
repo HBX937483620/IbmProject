@@ -1,6 +1,6 @@
 package com.ibm.issue.service;
 
-import static org.hamcrest.CoreMatchers.nullValue;
+//import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.List;
 import java.sql.Date;
@@ -54,9 +54,56 @@ public class ReportService {
 		return null;
 	}
 	
-	
+//	issue表模糊查询
+	public List<Report> queryReport(ReportWithBLOBs issue) {
+		String issueid = issue.getIssueid();
+		String creator = issue.getCreator();
+		String modifier = issue.getModifier();
+		int state = issue.getState();
+		java.util.Date createdate = issue.getCreatedate();
+		java.util.Date createdate2 = issue.getCreatedate();
+		java.util.Date endDate = issue.getEnddate();
+		java.util.Date endDate2 = issue.getEnddate();
 
+		ReportExample reportExample = new ReportExample();
+		com.ibm.issue.pojo.ReportExample.Criteria queryReport = reportExample.createCriteria();
+		if (issueid != "" || issueid != null) {
+			issueid = "%" + issue.getIssueid() + "%";
+			queryReport.andIssueidLike(issueid);
+		}
+		if (creator != "" || creator != null) {
+			creator = "%" + issue.getCreator() + "%";
+			queryReport.andCreatorLike(creator);
+		}
+		if (modifier != "" || modifier != null) {
+			modifier = "%" + issue.getModifier() + "%";
+			queryReport.andModifierLike(modifier);
+		}
+		/////////////////////
+		if (createdate != null && createdate2 != null) {
+			queryReport.andCreatedateBetween(createdate, createdate2);
+		}
+		if (createdate == null && createdate2 != null) {
+			queryReport.andCreatedateLessThanOrEqualTo(createdate2);
+		}
+		if (createdate != null && createdate2 == null) {
+			queryReport.andCreatedateGreaterThanOrEqualTo(createdate);
+		}
+		////////////////////////////
+		if (endDate != null && endDate2 != null) {
+			queryReport.andCreatedateBetween(endDate, endDate2);
+		}
+		if (endDate == null && endDate2 != null) {
+			queryReport.andCreatedateLessThanOrEqualTo(endDate2);
+		}
+		if (endDate != null && endDate2 == null) {
+			queryReport.andCreatedateGreaterThanOrEqualTo(endDate);
+		}
+		////////////////////////////
+		queryReport.andStateEqualTo(state);
 
-
+		List<Report> selectByExample = reportMapper.selectByExample(reportExample);
+		return selectByExample;
+	}
 
 }

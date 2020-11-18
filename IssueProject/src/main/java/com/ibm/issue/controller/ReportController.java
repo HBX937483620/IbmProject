@@ -45,4 +45,13 @@ public class ReportController {
 		return reportService.solve(issue);
 	}
 	
+	
+//	issue表模糊查询
+	@PostMapping("queryReport")
+	public void query(@RequestBody ReportWithBLOBs issue) {
+		List<Report> queryReport = reportService.queryReport(issue);
+		for (Report report : queryReport) {
+			System.out.println(report);
+		}
+	}
 }
