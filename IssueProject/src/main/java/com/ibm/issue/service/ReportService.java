@@ -65,10 +65,25 @@ public class ReportService {
 	}
 	
 
-
+	/**
+	 * 创建人决定是否退回修改
+	 * @param issue
+	 * @return
+	 */
 	public int verify(ReportWithBLOBs issue) {
-		
-		return 1;
+		issue.getFlag();
+		ReportExample reportExample = new ReportExample();
+		Criteria criteria = reportExample.createCriteria();
+		criteria.andIssueidEqualTo(issue.getIssueid());
+		ReportWithBLOBs report = new ReportWithBLOBs();
+		if(issue.getFlag().equals("1")) {
+			report.setState(1);
+		}else {
+			Date date = new Date(System.currentTimeMillis());
+			report.setEnddate(date);
+			report.setState(3);
+		}
+		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 
 //    //issue表模糊查询

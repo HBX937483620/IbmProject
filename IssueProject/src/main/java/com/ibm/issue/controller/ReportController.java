@@ -39,15 +39,23 @@ public class ReportController {
 		return reportService.details(issue);
 	}
 	
-
+/**
+ * 填写解决方案
+ * @param issue
+ * @return
+ */
 	@PostMapping("solve")
 	public int solution(@RequestBody ReportWithBLOBs issue) {
 		return reportService.solve(issue);
 	}
 	
-
+/**
+ * 退回修改或者关闭
+ * @param issue
+ * @return
+ */
 	@PostMapping("verify")
-	public int verification(@RequestBody ReportWithBLOBs issue) {
+	public int verification(@RequestBody ReportWithBLOBs issue) {		
 		return reportService.verify(issue);
 	}
 	
