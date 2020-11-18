@@ -15,7 +15,7 @@ spring:
             enable: true  #开启ssl安全
   datasource:
     username: root 
-    password: root
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/issue?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
     
@@ -25,6 +25,14 @@ mybatis:
   # 指定sql映射文件位置
   mapper-locations: classpath:Mapper/*.xml  
   type-aliases-package: com.ibm.issue
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+
   
 logging:
    level:

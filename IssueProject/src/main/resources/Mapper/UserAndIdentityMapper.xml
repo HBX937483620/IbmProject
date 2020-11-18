@@ -17,8 +17,18 @@
         </association>
   </resultMap>
   <select id="findUserAndIdentity" resultMap="UserAndIdentity">
-       select user.userId,user.name,user.email,user.password,user.singUp,user.useState,identity.perisson
+       select user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
         from   user,identity
-        where  user.permisson = identity.pid
+        where  user.permission = identity.pid 
+        <if test="user != null">
+        	<if test="user.userid != null">
+        	AND user.userId like concat('%', #{user.userid}, '%')
+        	</if>
+        </if>
+        <if test="user != null">
+        	<if test="user.name != null">
+        	AND user.name like concat('%', #{user.name}, '%')
+        	</if>
+        </if>
     </select>
 </mapper>
