@@ -1,5 +1,7 @@
 package com.ibm.issue.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,17 +45,33 @@ public class AdminSercice {
 		return json;
 	}
 	
+	/**
+	 * 将普通用户升级为经理
+	 * @param user
+	 * @return
+	 */
 	public Integer transToManager(User user) {
-		
-		User selectByPrimaryKey = userMapper.selectByPrimaryKey(user.getId());
-		selectByPrimaryKey.setPermission(2);
-		int updateByPrimaryKey = userMapper.updateByPrimaryKey(selectByPrimaryKey);
-		
-		return updateByPrimaryKey;
+		UserExample userExample = new UserExample();
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andUseridEqualTo(user.getUserid());
+		User permission = new User();
+		permission.setPermission(2);	
+		return userMapper.updateByExampleSelective(permission, userExample);
+
 	}
 	
+	
+	/**
+	 * 将用户状态更改为注销
+	 * @param user
+	 * @return
+	 */
 	public Integer deleteUser(User user) {
-		int deleteByPrimaryKey = userMapper.deleteByPrimaryKey(user.getId());
-		return deleteByPrimaryKey;
+		UserExample userExample = new UserExample();
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andUseridEqualTo(user.getUserid());
+		User permission = new User();
+		permission.setUserstate("注销");
+		return userMapper.updateByExampleSelective(permission, userExample);
 	}
 }
