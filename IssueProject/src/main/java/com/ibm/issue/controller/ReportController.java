@@ -45,8 +45,18 @@ public class ReportController {
 		return reportService.solve(issue);
 	}
 	
+
 	@PostMapping("verify")
 	public int verification(@RequestBody ReportWithBLOBs issue) {
 		return reportService.verify(issue);
 	}
+	
+//	issue表模糊查询
+//	@PostMapping("queryReport")
+//	public void query(@RequestBody ReportWithBLOBs issue) {
+//		List<Report> queryReport = reportService.queryReport(issue);
+//		for (Report report : queryReport) {
+//			System.out.println(report);
+//		}
+//	}
 }
