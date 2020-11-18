@@ -2,6 +2,7 @@ package com.ibm.issue.service;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.util.List;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ibm.issue.dao.ReportMapper;
-import com.ibm.issue.pojo.IdentityExample.Criteria;
 import com.ibm.issue.pojo.Report;
+import com.ibm.issue.pojo.ReportExample;
 import com.ibm.issue.pojo.ReportWithBLOBs;
+import com.ibm.issue.pojo.ReportExample.Criteria;
+
 
 @Service
 public class ReportService {
@@ -31,19 +34,29 @@ public class ReportService {
 	String issueid = string.substring(string.length()-6);
 	issue.setIssueid(issueid);
 	issue.setPlandate(date);    //后面记得改这个planDate
-	reportMapper.insert(issue);	
 	return reportMapper.insert(issue);
 	}
 
-	
-	public Report updateReport(ReportWithBLOBs issue) {
-		
-		return null;		
+	/**
+	 * 点击详情查看issue報表
+	 * @param issue
+	 * @return
+	 */
+	public List<ReportWithBLOBs> details(ReportWithBLOBs issue) {
+		ReportExample reportExample = new ReportExample();
+		Criteria createCriteria = reportExample.createCriteria();
+		createCriteria.andIssueidEqualTo(issue.getIssueid());
+		return reportMapper.selectByExampleWithBLOBs(reportExample);		
 	}
-//public Report getReport() {
-//	 TODO Auto-generated method stub
-//	return reportMapper.selectByPrimaryKey(1);
-//}
+	
+	public ReportWithBLOBs solve(ReportWithBLOBs issue) {
+		
+		return null;
+	}
+	
+	
+
+
 
 
 }
