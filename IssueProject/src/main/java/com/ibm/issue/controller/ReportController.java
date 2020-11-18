@@ -41,8 +41,12 @@ public class ReportController {
 	
 
 	@PostMapping("solve")
-	public ReportWithBLOBs solution(@RequestBody ReportWithBLOBs issue) {
+	public int solution(@RequestBody ReportWithBLOBs issue) {
 		return reportService.solve(issue);
 	}
 	
+	@PostMapping("verify")
+	public int verification(@RequestBody ReportWithBLOBs issue) {
+		return reportService.verify(issue);
+	}
 }

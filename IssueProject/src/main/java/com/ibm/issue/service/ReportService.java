@@ -33,7 +33,6 @@ public class ReportService {
 	String string = currentTimeMillis.toString();
 	String issueid = string.substring(string.length()-6);
 	issue.setIssueid(issueid);
-	issue.setPlandate(date);    //后面记得改这个planDate
 	return reportMapper.insert(issue);
 	}
 
@@ -49,14 +48,28 @@ public class ReportService {
 		return reportMapper.selectByExampleWithBLOBs(reportExample);		
 	}
 	
-	public ReportWithBLOBs solve(ReportWithBLOBs issue) {
-		
-		return null;
+	
+	/**
+	 * 修改人填写解决方案
+	 * @param issue
+	 * @return
+	 */
+	public int solve(ReportWithBLOBs issue) {
+		ReportExample reportExample = new ReportExample();
+		Criteria criteria = reportExample.createCriteria();
+		criteria.andIssueidEqualTo(issue.getIssueid());
+		ReportWithBLOBs report = new ReportWithBLOBs();
+		report.setSolution(issue.getSolution());
+		report.setState(2);
+		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 	
 	
 
-
+	public int verify(ReportWithBLOBs issue) {
+		
+		return 1;
+	}
 
 
 }
