@@ -39,7 +39,6 @@ public class ReportService {
 	String string = currentTimeMillis.toString();
 	String issueid = string.substring(string.length()-6);
 	issue.setIssueid(issueid);
-	issue.setPlandate(date);    //后面记得改这个planDate
 	return reportMapper.insert(issue);
 	}
 
@@ -55,61 +54,42 @@ public class ReportService {
 		return reportMapper.selectByExampleWithBLOBs(reportExample);		
 	}
 	
-	public ReportWithBLOBs solve(ReportWithBLOBs issue) {
-		
-		return null;
+	
+	/**
+	 * 修改人填写解决方案
+	 * @param issue
+	 * @return
+	 */
+	public int solve(ReportWithBLOBs issue) {
+		ReportExample reportExample = new ReportExample();
+		Criteria criteria = reportExample.createCriteria();
+		criteria.andIssueidEqualTo(issue.getIssueid());
+		ReportWithBLOBs report = new ReportWithBLOBs();
+		report.setSolution(issue.getSolution());
+		report.setState(2);
+		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 	
-    //issue表模糊查询
-	public List<Report> queryReport(ReportWithBLOBs issue) {
-		String issueid = issue.getIssueid();
-		String creator = issue.getCreator();
-		String modifier = issue.getModifier();
-		int state = issue.getState();
-		java.util.Date createdate = issue.getCreatedate();
-		java.util.Date createdate2 = issue.getCreatedate();
-		java.util.Date endDate = issue.getEnddate();
-		java.util.Date endDate2 = issue.getEnddate();
 
+	/**
+	 * 创建人决定是否退回修改
+	 * @param issue
+	 * @return
+	 */
+	public int verify(ReportWithBLOBs issue) {
+		issue.getFlag();
 		ReportExample reportExample = new ReportExample();
-		com.ibm.issue.pojo.ReportExample.Criteria queryReport = reportExample.createCriteria();
-		if (issueid != "" || issueid != null) {
-			issueid = "%" + issue.getIssueid() + "%";
-			queryReport.andIssueidLike(issueid);
+		Criteria criteria = reportExample.createCriteria();
+		criteria.andIssueidEqualTo(issue.getIssueid());
+		ReportWithBLOBs report = new ReportWithBLOBs();
+		if(issue.getFlag().equals("1")) {
+			report.setState(1);
+		}else {
+			Date date = new Date(System.currentTimeMillis());
+			report.setEnddate(date);
+			report.setState(3);
 		}
-		if (creator != "" || creator != null) {
-			creator = "%" + issue.getCreator() + "%";
-			queryReport.andCreatorLike(creator);
-		}
-		if (modifier != "" || modifier != null) {
-			modifier = "%" + issue.getModifier() + "%";
-			queryReport.andModifierLike(modifier);
-		}
-		/////////////////////
-		if (createdate != null && createdate2 != null) {
-			queryReport.andCreatedateBetween(createdate, createdate2);
-		}
-		else if (createdate == null && createdate2 != null) {
-			queryReport.andCreatedateLessThanOrEqualTo(createdate2);
-		}
-		else if(createdate!= null && createdate2 == null) {
-			queryReport.andCreatedateGreaterThanOrEqualTo(createdate);
-		}
-		////////////////////////////
-		if (endDate != null && endDate2 != null) {
-			queryReport.andCreatedateBetween(endDate, endDate2);
-		}
-		else if (endDate == null && endDate2 != null) {
-			queryReport.andCreatedateLessThanOrEqualTo(endDate2);
-		}
-		else if(endDate != null && endDate2 == null) {
-			queryReport.andCreatedateGreaterThanOrEqualTo(endDate);
-		}
-		////////////////////////////
-		queryReport.andStateEqualTo(state);
-
-		List<Report> selectByExample = reportMapper.selectByExample(reportExample);
-		return selectByExample;
+		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 	
 	//根据用户姓名ID查询
@@ -154,5 +134,58 @@ public class ReportService {
 		}
 		return jsonString;
 	}
+
+//    //issue表模糊查询
+//	public List<Report> queryReport(ReportWithBLOBs issue) {
+//		String issueid = issue.getIssueid();
+//		String creator = issue.getCreator();
+//		String modifier = issue.getModifier();
+//		int state = issue.getState();
+//		java.util.Date createdate = issue.getCreatedate();
+//		java.util.Date createdate2 = issue.getCreatedate();
+//		java.util.Date endDate = issue.getEnddate();
+//		java.util.Date endDate2 = issue.getEnddate();
+//
+//		ReportExample reportExample = new ReportExample();
+//		com.ibm.issue.pojo.ReportExample.Criteria queryReport = reportExample.createCriteria();
+//		if (issueid != "" || issueid != null) {
+//			issueid = "%" + issue.getIssueid() + "%";
+//			queryReport.andIssueidLike(issueid);
+//		}
+//		if (creator != "" || creator != null) {
+//			creator = "%" + issue.getCreator() + "%";
+//			queryReport.andCreatorLike(creator);
+//		}
+//		if (modifier != "" || modifier != null) {
+//			modifier = "%" + issue.getModifier() + "%";
+//			queryReport.andModifierLike(modifier);
+//		}
+//		/////////////////////
+//		if (createdate != null && createdate2 != null) {
+//			queryReport.andCreatedateBetween(createdate, createdate2);
+//		}
+//		else if (createdate == null && createdate2 != null) {
+//			queryReport.andCreatedateLessThanOrEqualTo(createdate2);
+//		}
+//		else if(createdate!= null && createdate2 == null) {
+//			queryReport.andCreatedateGreaterThanOrEqualTo(createdate);
+//		}
+//		////////////////////////////
+//		if (endDate != null && endDate2 != null) {
+//			queryReport.andCreatedateBetween(endDate, endDate2);
+//		}
+//		else if (endDate == null && endDate2 != null) {
+//			queryReport.andCreatedateLessThanOrEqualTo(endDate2);
+//		}
+//		else if(endDate != null && endDate2 == null) {
+//			queryReport.andCreatedateGreaterThanOrEqualTo(endDate);
+//		}
+
+//		queryReport.andStateEqualTo(state);
+
+//
+//		List<Report> selectByExample = reportMapper.selectByExample(reportExample);
+//		return selectByExample;
+//	}
 
 }

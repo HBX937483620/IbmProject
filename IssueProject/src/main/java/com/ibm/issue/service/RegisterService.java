@@ -57,7 +57,7 @@ public class RegisterService {
 		//判断是否为空
 		if (userFind.isEmpty()) {
 			flag="0";
-			return flag;
+			return "{\"flag\":\""+flag+"\"}";
 		}else {
 			
 			String password = userFind.get(0).getPassword();  //正确的密码
@@ -71,10 +71,10 @@ public class RegisterService {
 			+userFind.get(0).getPermission()+"\",\"flag\":\""+flag+"\"}";
 			}else if (password.equals(inputPassword) && userstate.equalsIgnoreCase("注销")) {
 				flag="2";
-				return flag;
+				return "{\"flag\":\""+flag+"\"}";
 			}else {
 				flag="-1";
-				return flag;
+				return "{\"flag\":\""+flag+"\"}";
 			}
 		}
 		

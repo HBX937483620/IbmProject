@@ -25,6 +25,14 @@ mybatis:
   # 指定sql映射文件位置
   mapper-locations: classpath:Mapper/*.xml  
   type-aliases-package: com.ibm.issue
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+
   
 logging:
    level:
