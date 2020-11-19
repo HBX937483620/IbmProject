@@ -26,14 +26,6 @@ public class Test {
 	@Autowired
 	private UserAndIdentityMapper mapper;
 	
-	@Autowired
-	private UserMapper userMapper;
-	
-	@PostMapping("find")
-	public List<User> selectLikeByNameOrId(@RequestBody User user) {
-		return mapper.test(user);
-	}
-	
 	@PostMapping("findReport")
 	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
 		System.out.println(System.currentTimeMillis());
