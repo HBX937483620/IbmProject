@@ -7,6 +7,16 @@ public class IssueReport {
 	private Integer modifiNum;
 	private Integer finishNum;
 	private Double completeRate;
+	private Report report;
+	
+	
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
+	}
 
 	public String getUserid() {
 		return userid;

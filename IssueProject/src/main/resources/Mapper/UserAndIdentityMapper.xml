@@ -21,6 +21,9 @@
 				jdbcType="VARCHAR" />
 		</association>
 	</resultMap>
+
+
+
 	<resultMap id="ReportAndState"
 		type="com.ibm.issue.pojo.Report">
 		<id column="id" jdbcType="INTEGER" property="id" />
@@ -42,6 +45,22 @@
 			<id column="id" property="id" jdbcType="INTEGER" />
 			<result column="sid" property="sid" jdbcType="INTEGER" />
 			<result column="detail" property="detail" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+
+
+	<resultMap id="IssueReport"
+		type="com.ibm.issue.pojo.IssueReport">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="userId" jdbcType="VARCHAR" property="userid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<association property="report"
+			javaType="com.ibm.issue.pojo.Identity">
+			<id column="id" property="id" jdbcType="INTEGER" />
+			<result column="creator" property="creator" jdbcType="VARCHAR" />
+			<result column="modifier" property="modifier"
+				jdbcType="VARCHAR" />
+			<result column="state" property="state" jdbcType="INTEGER" />
 		</association>
 	</resultMap>
 
@@ -97,23 +116,47 @@
 		</if>
 
 		<if test="createStartDate != null and createEndDate == null">
-			AND createdate &gt; #{createStartDate} 
+			AND createdate &gt; #{createStartDate}
 		</if>
 		<if test="createStartDate == null and createEndDate != null">
-			AND createdate &lt; #{createEndDate} 
+			AND createdate &lt; #{createEndDate}
 		</if>
 		<if test="createStartDate != null and createEndDate != null">
-			AND createdate between #{createStartDate} and #{createEndDate}
+			AND createdate between #{createStartDate} and
+			#{createEndDate}
 		</if>
-		
-		<if test="endStartDate != null and endEndDate != null" >
-			AND enddate between #{endStartDate} and #{endEndDate}
+
+		<if test="endStartDate != null and endEndDate != null">
+			AND enddate
+			between #{endStartDate} and #{endEndDate}
 		</if>
-		<if test="endStartDate != null and endEndDate == null" >
-			AND enddate &gt; #{endStartDate} 
+		<if test="endStartDate != null and endEndDate == null">
+			AND enddate
+			&gt; #{endStartDate}
 		</if>
-		<if test="endStartDate = null and endEndDate != null" >
-			AND enddate &lt; #{endEndDate}
+		<if test="endStartDate = null and endEndDate != null">
+			AND enddate
+			&lt; #{endEndDate}
 		</if>
 	</select>
+
+
+	<select id="findIssueReport" resultMap="IssueReport">
+		SELECT
+		user.userId,
+		user.name,
+		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId) AS
+		'创建数',
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) AS
+		'修改数' ,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and
+		report.state = 3) AS '完成数'
+		FROM
+		user,report
+		GROUP BY
+		user.id;
+	</select>
+
+
+
 </mapper>
