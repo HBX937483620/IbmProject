@@ -37,7 +37,21 @@ public class ReportWithBLOBs extends Report implements Serializable {
      *
      * @mbg.generated
      */
-    public String getContent() {
+    
+    private String flag;
+    
+    public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
+	
+	
+	
+	public String getContent() {
         return content;
     }
 

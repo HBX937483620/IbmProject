@@ -23,13 +23,13 @@ public class AdminController {
 		return adminSercice.selectLikeByNameOrId(userPage);
 	}
 	
-	@RequestMapping(value = "trans")
+	@RequestMapping(value = "transToManager")
 	public int transToManager(@RequestBody User user) {
 		return adminSercice.transToManager(user);
 	}
 	
-	@RequestMapping(value="delete")
-	public int deleteUser(User user) {
+	@RequestMapping(value="deleteUser")
+	public int deleteUser(@RequestBody User user) {
 		return adminSercice.deleteUser(user);
 	}
 }

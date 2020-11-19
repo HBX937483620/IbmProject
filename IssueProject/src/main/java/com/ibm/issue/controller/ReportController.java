@@ -31,7 +31,7 @@ public class ReportController {
 	}
 	
 	/**
-	 * 查看issue報表接口
+	 * 查看issue報表详情接口
 	 * @param issue
 	 * @return
 	 */
@@ -40,19 +40,32 @@ public class ReportController {
 		return reportService.details(issue);
 	}
 	
-
+/**
+ * 填写解决方案
+ * @param issue
+ * @return
+ */
 	@PostMapping("solve")
-	public ReportWithBLOBs solution(@RequestBody ReportWithBLOBs issue) {
+	public int solution(@RequestBody ReportWithBLOBs issue) {
 		return reportService.solve(issue);
 	}
 	
+/**
+ * 退回修改或者关闭
+ * @param issue
+ * @return
+ */
+	@PostMapping("verify")
+	public int verification(@RequestBody ReportWithBLOBs issue) {		
+		return reportService.verify(issue);
+	}
 	
 //	issue表模糊查询
-	@PostMapping("queryReport")
-	public void query(@RequestBody ReportWithBLOBs issue) {
-		List<Report> queryReport = reportService.queryReport(issue);
-		for (Report report : queryReport) {
-			System.out.println(report);
-		}
-	}
+//	@PostMapping("queryReport")
+//	public void query(@RequestBody ReportWithBLOBs issue) {
+//		List<Report> queryReport = reportService.queryReport(issue);
+//		for (Report report : queryReport) {
+//			System.out.println(report);
+//		}
+//	}
 }
