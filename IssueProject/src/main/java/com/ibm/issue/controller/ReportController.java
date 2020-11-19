@@ -1,6 +1,5 @@
 package com.ibm.issue.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ public class ReportController {
 	 */
 	@PostMapping("createReport")
 	public Integer create(@RequestBody ReportWithBLOBs issue ) {
-		System.out.println(issue.getLevel());
 		return reportService.createReport(issue);	
 	}
 	
@@ -56,9 +54,11 @@ public class ReportController {
  * @return
  */
 	@PostMapping("verify")
-	public int verification(@RequestBody ReportWithBLOBs issue) {		
+	public int verification(@RequestBody ReportWithBLOBs issue) {
+		System.out.println(111);
 		return reportService.verify(issue);
 	}
+	
 	
 
 }

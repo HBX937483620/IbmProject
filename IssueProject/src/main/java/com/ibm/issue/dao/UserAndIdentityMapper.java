@@ -12,6 +12,7 @@ public interface UserAndIdentityMapper {
 	
 	List<User> findUserAndIdentity(UserPage user);
 	
-	
 	List<ReportPage> findReportAndState(ReportPage r);
+	
+	List<ReportWithBLOBs> findReportAndState2(ReportWithBLOBs r);
 }

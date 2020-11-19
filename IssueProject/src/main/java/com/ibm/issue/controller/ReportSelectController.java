@@ -41,8 +41,8 @@ public class ReportSelectController {
 	 * @return
 	 */
 	@PostMapping("findReport")
-	public List<ReportPage> findReport(@RequestBody ReportPage r) {
-		return mapper.findReportAndState(r);
+	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
+		return mapper.findReportAndState2(r);
 	}
 	
 	/**

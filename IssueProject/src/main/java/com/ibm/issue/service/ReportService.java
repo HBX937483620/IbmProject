@@ -107,6 +107,7 @@ public class ReportService {
 		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 	
+
 //	//根据用户姓名ID查询
 //	public String queryByUserIdName(String[] a) {
 //		System.out.println("????????????????????");
@@ -171,5 +172,8 @@ public class ReportService {
         String json = "{\"total\":"+total+",\"rows\":"+list+" }";
 		return json;
 	}
+
+	
+
 
 }
