@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.ibm.issue.dao.UserAndIdentityMapper;
+import com.ibm.issue.dao.UserMapper;
+import com.ibm.issue.pojo.ReportWithBLOBs;
 import com.ibm.issue.pojo.User;
+import com.ibm.issue.pojo.UserExample;
+import com.ibm.issue.pojo.UserExample.Criteria;
 import com.ibm.issue.pojo.UserPage;
 
 
@@ -22,11 +26,27 @@ public class Test {
 	@Autowired
 	private UserAndIdentityMapper mapper;
 	
-	@PostMapping("select")
-	public String selectLikeByNameOrId(@RequestBody UserPage user) {
-		PageHelper.startPage(1,1);
-		List<User> a = mapper.findUserAndIdentity(user);
-		String list = JSON.toJSONString(a);
-		return list;
+	@Autowired
+	private UserMapper userMapper;
+	
+	@PostMapping("test")
+	public List<User> selectLikeByNameOrId(@RequestBody User user) {
+		UserExample userExample = new UserExample();
+		Criteria userCriteria = userExample.createCriteria();
+		
+		
+		if (user.getUserid() != null) {
+			userCriteria.andUseridLike("%"+user.getUserid()+"%");
+		}
+		if (user.getName() != null) {
+			userCriteria.andNameLike("%"+user.getName()+"%");
+		}
+		return userMapper.selectByExample(userExample);
+	}
+	
+	@PostMapping("findReport")
+	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
+		System.out.println(r.getCreateStartDate());
+		return mapper.findReportAndState(r);
 	}
 }

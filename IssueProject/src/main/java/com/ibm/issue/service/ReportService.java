@@ -33,7 +33,8 @@ public class ReportService {
 	String string = currentTimeMillis.toString();
 	String issueid = string.substring(string.length()-6);
 	issue.setIssueid(issueid);
-	issue.setPlandate(date);    //后面记得改这个planDate
+	issue.setPlandate(date); 
+	System.out.println(111);//后面记得改这个planDate
 	return reportMapper.insert(issue);
 	}
 

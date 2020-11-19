@@ -128,7 +128,69 @@ public class Report implements Serializable {
      *
      * @mbg.generated
      */
-    public Integer getId() {
+    
+    
+    /**
+     * 用于多表查询
+     * @return
+     */
+    private Issuestate issuestate;
+    
+    
+    
+	/**
+	 * 用于增加模糊查询的起始时间
+	 * @return
+	 */
+	private Date createStartDate;
+	private Date createEndDate;
+	private Date endStartDate;
+	private Date endEndDate;
+
+	public Date getEndStartDate() {
+		return endStartDate;
+	}
+
+	public void setEndStartDate(Date endStartDate) {
+		this.endStartDate = endStartDate;
+	}
+
+	public Date getEndEndDate() {
+		return endEndDate;
+	}
+
+	public void setEndEndDate(Date endEndDate) {
+		this.endEndDate = endEndDate;
+	}
+
+	public Date getCreateStartDate() {
+		return createStartDate;
+	}
+
+	public void setCreateStartDate(Date createStartDate) {
+		this.createStartDate = createStartDate;
+	}
+
+	public Date getCreateEndDate() {
+		return createEndDate;
+	}
+
+	public void setCreateEndDate(Date createEndDate) {
+		this.createEndDate = createEndDate;
+	}
+
+	public Issuestate getIssuestate() {
+		return issuestate;
+	}
+
+	public void setIssuestate(Issuestate issuestate) {
+		this.issuestate = issuestate;
+	}
+	
+	
+
+
+	public Integer getId() {
         return id;
     }
 
