@@ -29,24 +29,14 @@ public class Test {
 	@Autowired
 	private UserMapper userMapper;
 	
-	@PostMapping("test")
+	@PostMapping("find")
 	public List<User> selectLikeByNameOrId(@RequestBody User user) {
-		UserExample userExample = new UserExample();
-		Criteria userCriteria = userExample.createCriteria();
-		
-		
-		if (user.getUserid() != null) {
-			userCriteria.andUseridLike("%"+user.getUserid()+"%");
-		}
-		if (user.getName() != null) {
-			userCriteria.andNameLike("%"+user.getName()+"%");
-		}
-		return userMapper.selectByExample(userExample);
+		return mapper.test(user);
 	}
 	
 	@PostMapping("findReport")
 	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
-		System.out.println(r.getCreateStartDate());
+		System.out.println(System.currentTimeMillis());
 		return mapper.findReportAndState(r);
 	}
 }
