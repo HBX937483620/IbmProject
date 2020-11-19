@@ -155,6 +155,12 @@
 		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and report.state = 3)/(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as completeRate
 		FROM
 		user,report
+		<if test="userid != null">
+			WHERE user.userId=#{userid}
+		</if>
+		<if test="name != null">
+			AND user.name=#{name}
+		</if>
 		GROUP BY
 		user.id;
 	</select>
