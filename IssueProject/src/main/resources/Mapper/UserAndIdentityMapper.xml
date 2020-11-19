@@ -54,6 +54,9 @@
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="userId" jdbcType="VARCHAR" property="userid" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="createNum" jdbcType="INTEGER" property="createNum" />
+		<result column="modifiNum" jdbcType="INTEGER" property="modifiNum" />
+		<result column="finishNum" jdbcType="INTEGER" property="finishNum" />
 		<association property="report"
 			javaType="com.ibm.issue.pojo.Identity">
 			<id column="id" property="id" jdbcType="INTEGER" />
@@ -99,7 +102,7 @@
 
 	<select id="findReportAndState2" resultMap="ReportAndState">
 		select
-		r.issueId,r.title,r.creator,r.createDate,r.modifier,i.detail,r.planDate,r.endDate
+		r.id,r.issueId,r.title,r.creator,r.createDate,r.modifier,i.detail,r.planDate,r.endDate
 		from report r,issuestate i
 		where r.state = i.sid
 		<if test="issueid != null">
@@ -145,12 +148,9 @@
 		SELECT
 		user.userId,
 		user.name,
-		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId) AS
-		'创建数',
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) AS
-		'修改数' ,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and
-		report.state = 3) AS '完成数'
+		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId) as createNum , 
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as modifiNum ,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and report.state = 3) as finishNum
 		FROM
 		user,report
 		GROUP BY
