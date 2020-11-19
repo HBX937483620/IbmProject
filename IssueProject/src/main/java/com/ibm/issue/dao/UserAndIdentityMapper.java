@@ -2,6 +2,7 @@ package com.ibm.issue.dao;
 
 import java.util.List;
 
+import com.ibm.issue.pojo.IssueReport;
 import com.ibm.issue.pojo.ReportPage;
 import com.ibm.issue.pojo.ReportWithBLOBs;
 import com.ibm.issue.pojo.User;
@@ -16,5 +17,7 @@ public interface UserAndIdentityMapper {
 	List<ReportPage> findReportAndState(ReportPage r);
 	
 	List<ReportWithBLOBs> findReportAndState2(ReportWithBLOBs r);
+	
+	List<IssueReport> findIssueReport(User user);
 
 }
