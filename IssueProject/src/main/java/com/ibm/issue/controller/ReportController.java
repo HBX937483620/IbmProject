@@ -56,9 +56,11 @@ public class ReportController {
  * @return
  */
 	@PostMapping("verify")
-	public int verification(@RequestBody ReportWithBLOBs issue) {		
+	public int verification(@RequestBody ReportWithBLOBs issue) {
+		System.out.println(111);
 		return reportService.verify(issue);
 	}
+	
 	
 
 }
