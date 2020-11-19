@@ -5,12 +5,6 @@ public class IssueReport {
 	private String name;
 	private Integer createNum;
 	private Integer modifiNum;
-	@Override
-	public String toString() {
-		return "IssueReport [userid=" + userid + ", name=" + name + ", createNum=" + createNum + ", modifiNum="
-				+ modifiNum + ", finishNum=" + finishNum + ", completeRate=" + completeRate + "]";
-	}
-
 	private Integer finishNum;
 	private Double completeRate;
 
@@ -60,5 +54,10 @@ public class IssueReport {
 
 	public void setCompleteRate(Double completeRate) {
 		this.completeRate = completeRate;
+	}
+	@Override
+	public String toString() {
+		return "IssueReport [userid=" + userid + ", name=" + name + ", createNum=" + createNum + ", modifiNum="
+				+ modifiNum + ", finishNum=" + finishNum + ", completeRate=" + completeRate + "]";
 	}
 }
