@@ -44,8 +44,22 @@
 			<result column="detail" property="detail" jdbcType="VARCHAR" />
 		</association>
 	</resultMap>
-	
-	
+
+
+	<select id="test" resultMap="UserAndIdentity">
+		select
+		user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
+		from user,identity
+		where user.permission = identity.pid
+		<if test="userid != null">
+			AND userId like concat('%', #{userid}, '%')
+		</if>
+		<if test="name != null">
+			AND name like concat('%', #{name}, '%')
+		</if>
+
+	</select>
+
 	<select id="findUserAndIdentity" resultMap="UserAndIdentity">
 		select
 		user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
@@ -62,9 +76,9 @@
 			</if>
 		</if>
 	</select>
-	
-	
-	<select id="findReportAndState" resultMap="ReportAndState">
+
+
+	<select id="findReportAndState2" resultMap="ReportAndState">
 		select
 		r.issueId,r.title,r.creator,r.createDate,r.modifier,i.detail,r.planDate,r.endDate
 		from report r,issuestate i
@@ -82,14 +96,24 @@
 			AND modifier like concat('%', #{modifier}, '%')
 		</if>
 
-		<if test="createStartDate != null  ">
+		<if test="createStartDate != null and createEndDate == null">
+			AND createdate &gt; #{createStartDate} 
+		</if>
+		<if test="createStartDate == null and createEndDate != null">
+			AND createdate &lt; #{createEndDate} 
+		</if>
+		<if test="createStartDate != null and createEndDate != null">
 			AND createdate between #{createStartDate} and #{createEndDate}
 		</if>
-		<if test="endStartDate != null">
-
+		
+		<if test="endStartDate != null and endEndDate != null" >
 			AND enddate between #{endStartDate} and #{endEndDate}
 		</if>
-		
-		
+		<if test="endStartDate != null and endEndDate == null" >
+			AND enddate &gt; #{endStartDate} 
+		</if>
+		<if test="endStartDate = null and endEndDate != null" >
+			AND enddate &lt; #{endEndDate}
+		</if>
 	</select>
 </mapper>

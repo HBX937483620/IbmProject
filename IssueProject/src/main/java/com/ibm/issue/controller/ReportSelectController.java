@@ -42,6 +42,7 @@ public class ReportSelectController {
 	 */
 	@PostMapping("findReport")
 	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
+		System.out.println(r.getCreateStartDate());
 		return mapper.findReportAndState2(r);
 	}
 	
@@ -54,4 +55,5 @@ public class ReportSelectController {
 	public String findReport2(@RequestBody ReportPage r) {
 		return reportService.selectLikeByReport(r);
 	}
+
 }
