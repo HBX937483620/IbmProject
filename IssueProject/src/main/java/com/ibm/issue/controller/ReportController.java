@@ -40,7 +40,7 @@ public class ReportController {
 	}
 	
 /**
- * 填写解决方案
+ * 修改者填写解决方案
  * @param issue
  * @return
  */
