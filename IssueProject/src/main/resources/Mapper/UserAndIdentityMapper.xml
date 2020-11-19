@@ -81,10 +81,12 @@
 		<if test="modifier != null">
 			AND modifier like concat('%', #{modifier}, '%')
 		</if>
-		<if test="createdate != null">
+
+		<if test="createStartDate != null  ">
 			AND createdate between #{createStartDate} and #{createEndDate}
 		</if>
-		<if test="enddate != null">
+		<if test="endStartDate != null">
+
 			AND enddate between #{endStartDate} and #{endEndDate}
 		</if>
 		

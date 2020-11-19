@@ -18,7 +18,14 @@ public class AdminController {
 	@Autowired
 	private AdminSercice adminSercice;
 	
-	@RequestMapping(value = "selectLikeByNameOrId")
+	
+	
+	@PostMapping("selectLikeByNameOrId")
+	public List<User> selectLikeByNameOrId(@RequestBody User user) {
+		return adminSercice.selectLikeByNameOrId(user);
+	}
+	
+	@RequestMapping(value = "findLikeByNameOrId")
 	public String selectLikeByNameOrId(@RequestBody UserPage userPage) {
 		return adminSercice.selectLikeByNameOrId(userPage);
 	}

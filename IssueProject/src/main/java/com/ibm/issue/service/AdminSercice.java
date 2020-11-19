@@ -1,10 +1,10 @@
 package com.ibm.issue.service;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
@@ -25,6 +25,12 @@ public class AdminSercice {
 	@Autowired
 	private UserAndIdentityMapper mapper;
 	
+	
+	/**
+	 * 对用户的分页模糊查询
+	 * @param userPage
+	 * @return
+	 */
 	public String selectLikeByNameOrId(UserPage userPage) {
 		//使用插件分页查询
 		System.out.println(userPage.getPage());
@@ -56,6 +62,17 @@ public class AdminSercice {
         long total = info.getTotal();
         String json = "{\"total\":"+total+",\"rows\":"+list+" }";
 		return json;
+	}
+	
+	
+	
+	/**
+	 * 对用户的模糊查询
+	 * @param user
+	 * @return
+	 */
+	public List<User> selectLikeByNameOrId(User user) {
+		return mapper.test(user);
 	}
 	
 	/**

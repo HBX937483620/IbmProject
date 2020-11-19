@@ -32,23 +32,10 @@ public class ReportSelectController {
 	@Autowired
 	private UserMapper userMapper;
 	
+
 	@Autowired
 	private ReportService reportService;
 	
-	@PostMapping("test")
-	public List<User> selectLikeByNameOrId(@RequestBody User user) {
-		UserExample userExample = new UserExample();
-		Criteria userCriteria = userExample.createCriteria();
-		
-		
-		if (user.getUserid() != null) {
-			userCriteria.andUseridLike("%"+user.getUserid()+"%");
-		}
-		if (user.getName() != null) {
-			userCriteria.andNameLike("%"+user.getName()+"%");
-		}
-		return userMapper.selectByExample(userExample);
-	}
 
 	/**
 	 * issue报表直接模糊查询
@@ -56,7 +43,9 @@ public class ReportSelectController {
 	 * @return
 	 */
 	@PostMapping("findReport")
+
 	public List<ReportPage> findReport(@RequestBody ReportPage r) {
+
 		return mapper.findReportAndState(r);
 	}
 	
