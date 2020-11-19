@@ -99,7 +99,7 @@
 
 	<select id="findReportAndState2" resultMap="ReportAndState">
 		select
-		r.issueId,r.title,r.creator,r.createDate,r.modifier,i.detail,r.planDate,r.endDate
+		r.id,r.issueId,r.title,r.creator,r.createDate,r.modifier,i.detail,r.planDate,r.endDate
 		from report r,issuestate i
 		where r.state = i.sid
 		<if test="issueid != null">

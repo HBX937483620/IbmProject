@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.ibm.issue.dao.ReportMapper;
 import com.ibm.issue.dao.UserAndIdentityMapper;
 import com.ibm.issue.dao.UserMapper;
+import com.ibm.issue.pojo.IssueReport;
 import com.ibm.issue.pojo.ReportPage;
 import com.ibm.issue.pojo.ReportWithBLOBs;
 import com.ibm.issue.pojo.User;
@@ -41,9 +42,8 @@ public class ReportSelectController {
 	 * @return
 	 */
 	@PostMapping("findReport")
-	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
-		System.out.println(r.getCreateStartDate());
-		return mapper.findReportAndState2(r);
+	public String findReport(@RequestBody ReportWithBLOBs r) {
+		return JSON.toJSONString(mapper.findReportAndState2(r));
 	}
 	
 	/**
@@ -54,6 +54,16 @@ public class ReportSelectController {
 	@PostMapping("findReport2")
 	public String findReport2(@RequestBody ReportPage r) {
 		return reportService.selectLikeByReport(r);
+	}
+	
+	/**
+	 * 查询个人的issue报表情况
+	 * @param user
+	 * @return
+	 */
+	@PostMapping("findIssueReport")
+	public String findIssueReport(@RequestBody User user) {
+		return reportService.findIssueReport(user);
 	}
 
 }
