@@ -61,6 +61,21 @@ public class ReportController {
 	}
 	
 //	issue表模糊查询
+<<<<<<< HEAD
+	@PostMapping("queryReport")
+	public void query(@RequestBody ReportWithBLOBs issue) {
+		List<Report> queryReport = reportService.queryReport(issue);
+		for (Report report : queryReport) {
+			System.out.println(report);
+		}
+	}
+	
+	//根据用户姓名ID模糊查询
+	@PostMapping(value="queryByNameId")
+	public String query2(@RequestBody String[] a) {
+		return reportService.queryByUserIdName(a);
+	}
+=======
 //	@PostMapping("queryReport")
 //	public void query(@RequestBody ReportWithBLOBs issue) {
 //		List<Report> queryReport = reportService.queryReport(issue);
@@ -68,4 +83,5 @@ public class ReportController {
 //			System.out.println(report);
 //		}
 //	}
+>>>>>>> 1c75c3b52c8429407654bcb0df787c25ac960bf9
 }
