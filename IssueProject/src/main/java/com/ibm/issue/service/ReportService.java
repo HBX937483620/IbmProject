@@ -174,7 +174,15 @@ public class ReportService {
 	}
 
 	public String findIssueReport(User user) {
-		return JSON.toJSONString(mapper.findIssueReport(user));
+		List<IssueReport> findIssueReport = mapper.findIssueReport(user);
+		for (IssueReport issueReport : findIssueReport) {
+			if(issueReport.getModifiNum() == 0) {
+				issueReport.setCompleteRate(0.00);
+			}else {
+				
+			}
+		}
+		return JSON.toJSONString(findIssueReport);
 	}
 
 
