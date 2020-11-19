@@ -30,7 +30,7 @@ public class ReportController {
 	}
 	
 	/**
-	 * 查看issue報表接口
+	 * 查看issue報表详情接口
 	 * @param issue
 	 * @return
 	 */
