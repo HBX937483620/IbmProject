@@ -26,6 +26,7 @@ public class ReportController {
 	 */
 	@PostMapping("createReport")
 	public Integer create(@RequestBody ReportWithBLOBs issue ) {
+		System.out.println(issue.getLevel());
 		return reportService.createReport(issue);	
 	}
 	
