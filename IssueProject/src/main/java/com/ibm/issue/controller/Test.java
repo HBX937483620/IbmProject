@@ -28,7 +28,6 @@ public class Test {
 	
 	@PostMapping("findReport")
 	public List<ReportWithBLOBs> findReport(@RequestBody ReportWithBLOBs r) {
-		System.out.println(System.currentTimeMillis());
 		return mapper.findReportAndState(r);
 	}
 }
