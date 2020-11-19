@@ -9,17 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ibm.issue.dao.ReportMapper;
+import com.ibm.issue.dao.UserAndIdentityMapper;
 import com.ibm.issue.pojo.Report;
 import com.ibm.issue.pojo.ReportExample;
 import com.ibm.issue.pojo.ReportWithBLOBs;
+import com.ibm.issue.pojo.User;
+import com.ibm.issue.pojo.UserPage;
 import com.ibm.issue.pojo.ReportExample.Criteria;
+import com.ibm.issue.pojo.ReportPage;
 
 
 @Service
 public class ReportService {
 	@Autowired
 	private ReportMapper reportMapper;
+	
+	@Autowired
+	private UserAndIdentityMapper mapper;
 	
 /**
  * 创建人创建issue表
@@ -86,57 +96,26 @@ public class ReportService {
 		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 
-//    //issue表模糊查询
-//	public List<Report> queryReport(ReportWithBLOBs issue) {
-//		String issueid = issue.getIssueid();
-//		String creator = issue.getCreator();
-//		String modifier = issue.getModifier();
-//		int state = issue.getState();
-//		java.util.Date createdate = issue.getCreatedate();
-//		java.util.Date createdate2 = issue.getCreatedate();
-//		java.util.Date endDate = issue.getEnddate();
-//		java.util.Date endDate2 = issue.getEnddate();
-//
-//		ReportExample reportExample = new ReportExample();
-//		com.ibm.issue.pojo.ReportExample.Criteria queryReport = reportExample.createCriteria();
-//		if (issueid != "" || issueid != null) {
-//			issueid = "%" + issue.getIssueid() + "%";
-//			queryReport.andIssueidLike(issueid);
-//		}
-//		if (creator != "" || creator != null) {
-//			creator = "%" + issue.getCreator() + "%";
-//			queryReport.andCreatorLike(creator);
-//		}
-//		if (modifier != "" || modifier != null) {
-//			modifier = "%" + issue.getModifier() + "%";
-//			queryReport.andModifierLike(modifier);
-//		}
-//		/////////////////////
-//		if (createdate != null && createdate2 != null) {
-//			queryReport.andCreatedateBetween(createdate, createdate2);
-//		}
-//		else if (createdate == null && createdate2 != null) {
-//			queryReport.andCreatedateLessThanOrEqualTo(createdate2);
-//		}
-//		else if(createdate!= null && createdate2 == null) {
-//			queryReport.andCreatedateGreaterThanOrEqualTo(createdate);
-//		}
-//		////////////////////////////
-//		if (endDate != null && endDate2 != null) {
-//			queryReport.andCreatedateBetween(endDate, endDate2);
-//		}
-//		else if (endDate == null && endDate2 != null) {
-//			queryReport.andCreatedateLessThanOrEqualTo(endDate2);
-//		}
-//		else if(endDate != null && endDate2 == null) {
-//			queryReport.andCreatedateGreaterThanOrEqualTo(endDate);
-//		}
+	
+	
+	
+	public String selectLikeByReport(ReportPage reportPage) {
+		//使用插件分页查询
+		System.out.println(reportPage.getPage());
+		System.out.println(reportPage.getRows());
+		PageHelper.startPage(reportPage.getPage(),reportPage.getRows());
 
-//		queryReport.andStateEqualTo(state);
+		
+		//建立多表查询和模糊查询
+		List<ReportPage> reportFind = mapper.findReportAndState(reportPage);
 
-//
-//		List<Report> selectByExample = reportMapper.selectByExample(reportExample);
-//		return selectByExample;
-//	}
+		
+		//转化为json
+		String list = JSON.toJSONString(reportFind);
+        PageInfo info = new PageInfo(reportFind);
+        long total = info.getTotal();
+        String json = "{\"total\":"+total+",\"rows\":"+list+" }";
+		return json;
+	}
 
 }
