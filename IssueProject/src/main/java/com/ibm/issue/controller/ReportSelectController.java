@@ -32,20 +32,16 @@ public class ReportSelectController {
 	@Autowired
 	private UserMapper userMapper;
 	
-
 	@Autowired
 	private ReportService reportService;
 	
-
 	/**
 	 * issue报表直接模糊查询
 	 * @param r
 	 * @return
 	 */
 	@PostMapping("findReport")
-
 	public List<ReportPage> findReport(@RequestBody ReportPage r) {
-
 		return mapper.findReportAndState(r);
 	}
 	
