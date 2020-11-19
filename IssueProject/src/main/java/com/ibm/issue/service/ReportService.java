@@ -9,10 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.ibm.issue.dao.ReportMapper;
+import com.ibm.issue.dao.UserMapper;
 import com.ibm.issue.pojo.Report;
 import com.ibm.issue.pojo.ReportExample;
 import com.ibm.issue.pojo.ReportWithBLOBs;
+import com.ibm.issue.pojo.User;
+import com.ibm.issue.pojo.UserExample;
 import com.ibm.issue.pojo.ReportExample.Criteria;
 
 
@@ -20,6 +24,8 @@ import com.ibm.issue.pojo.ReportExample.Criteria;
 public class ReportService {
 	@Autowired
 	private ReportMapper reportMapper;
+	@Autowired
+	private UserMapper userMapper;
 	
 /**
  * 创建人创建issue表
@@ -104,6 +110,49 @@ public class ReportService {
 
 		List<Report> selectByExample = reportMapper.selectByExample(reportExample);
 		return selectByExample;
+	}
+	
+	//根据用户姓名ID查询
+	public String queryByUserIdName(String[] a) {
+		System.out.println("????????????????????");
+		String userId=a[0];
+		String userName=a[1];
+		System.out.println(userId);
+		System.out.println(userName);
+		ReportExample reportExample = new ReportExample();
+		com.ibm.issue.pojo.ReportExample.Criteria queryReport = reportExample.createCriteria();
+		
+		String jsonString="";
+		if(userName!="") {
+			System.out.println("执行1");
+			userName="%"+userName+"%";
+			queryReport.andCreatorLike(userName);
+			List<Report> selectByExample = reportMapper.selectByExample(reportExample);
+			jsonString=JSON.toJSONString(selectByExample);
+		}
+		else if(userId!="") {
+			System.out.println("执行2");
+			//根据Id模糊查询获得用户名
+			userId="%"+userId+"%";
+			System.out.println(userId);
+			UserExample userExample=new UserExample();
+			com.ibm.issue.pojo.UserExample.Criteria queryUser=userExample.createCriteria();
+			queryUser.andUseridLike(userId);
+			List<User> selectByExample = userMapper.selectByExample(userExample);
+			for (User user : selectByExample) {
+//				reportExample.clear();
+				queryReport.andCreatorEqualTo(user.getName());
+				
+				System.out.println("准备找的名字"+user.getName());
+				
+				List<Report> selectByExample2 = reportMapper.selectByExample(reportExample);
+				
+				jsonString+=JSON.toJSONString(selectByExample2);
+				
+				System.out.println("草草草草草"+jsonString);
+			}
+		}
+		return jsonString;
 	}
 
 }

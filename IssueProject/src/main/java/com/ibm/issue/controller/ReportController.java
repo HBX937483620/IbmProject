@@ -54,4 +54,10 @@ public class ReportController {
 			System.out.println(report);
 		}
 	}
+	
+	//根据用户姓名ID模糊查询
+	@PostMapping(value="queryByNameId")
+	public String query2(@RequestBody String[] a) {
+		return reportService.queryByUserIdName(a);
+	}
 }
