@@ -18,7 +18,7 @@ import com.ibm.issue.dao.UserAndIdentityMapper;
 
 import com.ibm.issue.dao.ReportMapper;
 import com.ibm.issue.dao.UserMapper;
-
+import com.ibm.issue.pojo.IssueReport;
 import com.ibm.issue.pojo.Report;
 import com.ibm.issue.pojo.ReportExample;
 import com.ibm.issue.pojo.ReportWithBLOBs;
@@ -173,7 +173,9 @@ public class ReportService {
 		return json;
 	}
 
-	
+	public String findIssueReport(User user) {
+		return JSON.toJSONString(mapper.findIssueReport(user));
+	}
 
 
 }
