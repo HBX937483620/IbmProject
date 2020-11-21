@@ -17,6 +17,7 @@ import com.ibm.issue.pojo.UserExample.Criteria;
 public class UserService {
 	@Autowired
 	private UserMapper userMapper;
+
 	
 	/**
 	 * 用于测试是否成功返回数据
@@ -54,6 +55,17 @@ public class UserService {
 		//执行修改语句保存到数据库
 				int isUpdate = userMapper.updateByExampleSelective(user, userExample);
 				return isUpdate;
+	}
+	
+	
+	/**
+	 * 返回修改完后的信息
+	 */
+	public User getUpdateUser(User user) {
+		UserExample userExample = new UserExample();
+		Criteria updateUser = userExample.createCriteria();
+		updateUser.andUseridEqualTo(user.getUserid());
+		return userMapper.selectByExample(userExample).get(0);
 	}
 	
 	

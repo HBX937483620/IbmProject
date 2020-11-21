@@ -5,14 +5,19 @@ spring:
     restart:
       enabled: true
   mail:
-    username: 1462718182@qq.com  #修改为自己的邮箱
-    password: bjfwqtyzytuphajb  #授权码（第三步中生成的授权码）
-    host: smtp.qq.com  #发送邮件的服务主机
+    username: codecodeup@163.com  #修改为自己的邮箱
+    password: QKRIUAMMLHGGYEGB  #授权码（第三步中生成的授权码）
+    host: smtp.163.com  #发送邮件的服务主机
     properties:
       mail: 
-        smtp: 
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
           ssl: 
             enable: true  #开启ssl安全
+            
   datasource:
     username: root 
     password: 

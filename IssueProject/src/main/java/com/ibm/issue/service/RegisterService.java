@@ -2,11 +2,16 @@ package com.ibm.issue.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import com.ibm.issue.dao.UserMapper;
+import com.ibm.issue.pojo.EmailMessage;
 import com.ibm.issue.pojo.User;
 import com.ibm.issue.pojo.UserExample;
 import com.ibm.issue.pojo.UserExample.Criteria;
@@ -15,6 +20,31 @@ import com.ibm.issue.pojo.UserExample.Criteria;
 public class RegisterService {
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Value("${spring.mail.username}")
+    private String mailFrom;
+	
+	@Autowired
+	private JavaMailSenderImpl sendEmail;
+	
+	/**
+	 * 邮箱验证
+	 */
+	public String sendEmail(String emailTo) {
+		//设置发送信息
+		SimpleMailMessage message =	new SimpleMailMessage();
+		message.setFrom(mailFrom);
+		message.setSubject("验证码");
+		message.setTo(emailTo);
+		//生成随机数
+		Integer nextInt = new Random().nextInt(9000)+1000;
+		message.setText(nextInt.toString());
+		
+		//发送邮件
+		sendEmail.send(message);
+		
+		return nextInt.toString();
+	}
 	
 	/**
 	 * 注册功能
