@@ -7,6 +7,7 @@ public class IssueReport {
 	private Integer modifiNum;
 	private Integer finishNum;
 	private Double  completeRate;
+	private String  rateString;
 	private Report report;
 	
 	
@@ -63,14 +64,24 @@ public class IssueReport {
 		return completeRate;
 	}
 
+	@Override
+	public String toString() {
+		return "IssueReport [userid=" + userid + ", name=" + name + ", createNum=" + createNum + ", modifiNum="
+				+ modifiNum + ", finishNum=" + finishNum + ", completeRate=" + completeRate + ", rateString="
+				+ rateString + ", report=" + report + "]";
+	}
+
+	public String getRateString() {
+		return rateString;
+	}
+
+	public void setRateString(String rateString) {
+		this.rateString = rateString;
+	}
+
 	public void setCompleteRate(Double completeRate) {
 		this.completeRate = completeRate;
 	}
 
-	@Override
-	public String toString() {
-		return "IssueReport [userid=" + userid + ", name=" + name + ", createNum=" + createNum + ", modifiNum="
-				+ modifiNum + ", finishNum=" + finishNum + ", completeRate=" + completeRate + ", report=" + report
-				+ "]";
-	}
+	
 }

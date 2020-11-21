@@ -178,8 +178,11 @@ public class ReportService {
 		for (IssueReport issueReport : findIssueReport) {
 			if(issueReport.getModifiNum() == 0) {
 				issueReport.setCompleteRate(0.00);
+				Double completeRate = (issueReport.getCompleteRate()*100.00);
+				issueReport.setRateString(completeRate.toString()+"%");
 			}else {
-				
+				Double completeRate = (issueReport.getCompleteRate()*100.00);
+				issueReport.setRateString(completeRate.toString()+"%");
 			}
 		}
 		return JSON.toJSONString(findIssueReport);
