@@ -27,7 +27,7 @@ public class EmailMessage {
     
 	
 	public static String getMessage(String need) {
-		
+
 		String message = "<div id=\"qm_con_body\"><div id=\"mailContentContainer\" class=\"qmbox qm_con_body_content qqmail_webmail_only\" style=\"\"><div style=\"text-align:center;background:#f1f4f6;padding-bottom:30px;\">\r\n" + 
 				"    <table width=\"640\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0 auto;\"><tbody><tr><td>\r\n" + 
 				"        <div style=\"width:640px;font:24px/42px helvetica,'Hiragino Sans GB','Microsoft YaHei','微软雅黑','宋体';color:#606060;background:#f1f4f6;text-align:center;\">\r\n" + 
@@ -46,6 +46,8 @@ public class EmailMessage {
 				"                    <div style=\"padding-bottom:30px;\"> 如果该验证码已经失效，请您进入 <a href=\"\" style=\"color:#09b76f;text-decoration:none;\" target=\"_blank\" rel=\"noopener\">Issue注册系统</a>- 重新验证发送。</div>\r\n" + 
 				"                </div>\r\n" + 
 				"               <img src=\"https://www.ibm.com/images/portal/C030478K15316S90/IBMGCG.png\">\r\n" + 
+				"                <div style=\"padding-top:33px;\">\r\n" +
+				"                      关注IBM公众号获取更多资讯</div>    "+
 				"            </div>\r\n" + 
 				"            <div style=\"margin:0 10px;height:10px;overflow:hidden;text-indent:-2000px;background:#0ebb9a;\"></div>\r\n" + 
 				"        </div>\r\n" + 
