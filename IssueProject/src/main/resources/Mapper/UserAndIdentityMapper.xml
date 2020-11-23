@@ -59,8 +59,7 @@
 		<result column="finishNum" jdbcType="INTEGER" property="finishNum" />
 		<result column="completeRate" jdbcType="DOUBLE" property="completeRate" />
 		<association property="report"
-			javaType="com.ibm.issue.pojo.Identity">
-			<id column="id" property="id" jdbcType="INTEGER" />
+			javaType="com.ibm.issue.pojo.Report">
 			<result column="creator" property="creator" jdbcType="VARCHAR" />
 			<result column="modifier" property="modifier"
 				jdbcType="VARCHAR" />
@@ -147,6 +146,7 @@
 
 	<select id="findIssueReport" resultMap="IssueReport">
 		SELECT
+		user.id,
 		user.userId,
 		user.name,
 		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId) as createNum , 
@@ -155,11 +155,11 @@
 		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and report.state = 3)/(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as completeRate
 		FROM
 		user,report
-		<if test="userid != null">
-			WHERE user.userId=#{userid}
+		<if test="userid != null and userid != '' ">
+			WHERE user.userId like concat('%', #{userid}, '%')
 		</if>
-		<if test="name != null">
-			AND user.name=#{name}
+		<if test="name != null  and name != ''">
+			WHERE user.name like concat('%', #{name}, '%')
 		</if>
 		GROUP BY
 		user.id;

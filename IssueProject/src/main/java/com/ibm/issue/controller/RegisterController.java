@@ -1,5 +1,7 @@
 package com.ibm.issue.controller;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,7 @@ public class RegisterController {
 	private RegisterService registerService;
 	
 	@PostMapping("sendEmail")
-	public String sendEmail(@RequestBody EmailMessage emailTo) {
+	public String sendEmail(@RequestBody EmailMessage emailTo) throws MessagingException {
 		return registerService.sendEmail(emailTo.getMailTo());
 	}
 	

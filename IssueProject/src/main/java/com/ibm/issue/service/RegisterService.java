@@ -4,10 +4,14 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.ibm.issue.dao.UserMapper;
@@ -25,26 +29,40 @@ public class RegisterService {
     private String mailFrom;
 	
 	@Autowired
-	private JavaMailSenderImpl sendEmail;
+	private JavaMailSender sendEmail;
 	
 	/**
 	 * 邮箱验证
+	 * @throws MessagingException 
 	 */
-	public String sendEmail(String emailTo) {
-		//设置发送信息
-		SimpleMailMessage message =	new SimpleMailMessage();
-		message.setFrom(mailFrom);
-		message.setSubject("验证码");
-		message.setTo(emailTo);
+	public String sendEmail(String emailTo) throws MessagingException {
+		
 		//生成随机数
 		Integer nextInt = new Random().nextInt(9000)+1000;
-		message.setText(nextInt.toString());
+		String string = nextInt.toString();
 		
-		//发送邮件
-		sendEmail.send(message);
+		MimeMessage mimeMessage = sendEmail.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+		//邮件设置
+		helper.setSubject("验证码");
+		helper.setText(EmailMessage.getMessage(string),true);
+		helper.setTo(emailTo);
+		helper.setFrom(mailFrom);
+		sendEmail.send(mimeMessage);
 		
-		return nextInt.toString();
+		return string;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 注册功能
