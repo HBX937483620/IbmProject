@@ -71,8 +71,8 @@ public class AdminSercice {
 	 * @param user
 	 * @return
 	 */
-	public List<User> selectLikeByNameOrId(User user) {
-		return mapper.test(user);
+	public String selectLikeByNameOrId(User user) {
+		return JSON.toJSONString(mapper.test(user));
 	}
 	
 	/**
