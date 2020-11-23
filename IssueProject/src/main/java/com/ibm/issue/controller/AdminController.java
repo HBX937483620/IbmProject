@@ -21,7 +21,7 @@ public class AdminController {
 	
 	
 	@PostMapping("selectLikeByNameOrId")
-	public List<User> selectLikeByNameOrId(@RequestBody User user) {
+	public String selectLikeByNameOrId(@RequestBody User user) {
 		return adminSercice.selectLikeByNameOrId(user);
 	}
 	

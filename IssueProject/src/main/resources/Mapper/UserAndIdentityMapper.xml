@@ -70,6 +70,7 @@
 
 	<select id="test" resultMap="UserAndIdentity">
 		select
+		user.id,
 		user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
 		from user,identity
 		where user.permission = identity.pid
@@ -84,7 +85,7 @@
 
 	<select id="findUserAndIdentity" resultMap="UserAndIdentity">
 		select
-		user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
+		user.id,user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
 		from user,identity
 		where user.permission = identity.pid
 		<if test="user != null">
