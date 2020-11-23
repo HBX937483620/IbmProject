@@ -23,6 +23,7 @@ public class RegisterController {
 		return registerService.sendEmail(emailTo.getMailTo());
 	}
 	
+	
 	@PostMapping("register")
 	public Integer register(@RequestBody User user) {
 		return registerService.register(user);

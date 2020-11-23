@@ -28,7 +28,7 @@ public class UserController {
 		return userService.updateUser(user);
 	}
 	
-	@PostMapping("/getUpdateUser")
+	@PostMapping("/getUserInfo")
 	public User getUpdateUser(@RequestBody User user) {
 		return userService.getUpdateUser(user);
 	}
