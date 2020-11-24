@@ -187,6 +187,28 @@
 		GROUP BY
 		user.id;
 	</select>
+	
+	
+		<select id="findIssueReportToSend" resultMap="IssueReport">
+		SELECT
+		user.id,
+		user.userId,
+		user.name,
+		(SELECT COUNT(report.id) FROM
+		report WHERE report.creator=user.userId) as createNum ,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as
+		modifiNum ,
+		(SELECT COUNT(report.id) FROM report WHERE
+		report.modifier=user.userId and report.state = 3) as finishNum,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId
+		and report.state = 3)/(SELECT COUNT(report.id) FROM report WHERE
+		report.modifier=user.userId) as completeRate
+		FROM
+		user,report
+		WHERE user.userId = #{userid}
+		GROUP BY
+		user.id;
+	</select>
 
 
 

@@ -19,5 +19,7 @@ public interface UserAndIdentityMapper {
 	List<ReportWithBLOBs> findReportAndState2(ReportWithBLOBs r);
 	
 	List<IssueReport> findIssueReport(User user);
+	
+	IssueReport findIssueReportToSend(User user);
 
 }

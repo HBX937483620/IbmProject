@@ -59,7 +59,7 @@ public class EmailMessage {
 		return message;
 	}
 	
-	public static String sendSession() {
+	public static String sendSession(IssueReport ir,String userId) {
 		String message = "<div>\r\n" + 
 				"        <span class=\"genEmailNicker\">\r\n" + 
 				"        \r\n" + 
@@ -116,9 +116,9 @@ public class EmailMessage {
 				"        \r\n" + 
 				"        \r\n" + 
 				"        \r\n" + 
-				"                                                    <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\"><span style=\"color: rgb(51, 51, 51); font-size: 14px;\">您好，用户666指派给您一份issue事务，请及时上线查看详情并修改。您现在的issue事务详情如下：</span></p>\r\n" + 
-				"        <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\"><span style=\"color: rgb(51, 51, 51); font-size: 14px;\"></span></p><p style=\"padding-left:14px;font-size:14px;\"></p><table cellpadding=\"5\" cellspacing=\"0\" border=\"1\" bordercolor=\"#CCCCCC\" style=\"font-size:14px; table-layout: fixed;word-break: break-word;\" width=\"80%\"><colgroup><col width=\"13%\">  <col width=\"14%\"></colgroup><tbody><tr><th>序号</th><th>用户ID</th><th>用户姓名</th><th>创建Issue数</th><th>收到Issue数</th><th>修改Issue数</th><th>完成率</th></tr><tr><td>云服务器CVM</td><td>未命名</td><td>ins-bjdzh18k</td><td>广州</td><td>默认项目</td><td>\r\n" + 
-				"            <span style=\"border-bottom: 1px dashed rgb(204, 204, 204); position: relative;\" t=\"5\" times=\"\" isout=\"0\">2020-06-24</span></td><td>内网IP:172.16.0.2<br>外网IP:129.204.225.203<br></td></tr></tbody></table><p></p>\r\n" + 
+				"                                                    <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\"><span style=\"color: rgb(51, 51, 51); font-size: 14px;\">您好，可爱的用户("+userId+")又指派给您一份issue事务，请及时上线查看详情并修改。您现在的issue事务详情如下：</span></p>\r\n" + 
+				"        <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\"><span style=\"color: rgb(51, 51, 51); font-size: 14px;\"></span></p><p style=\"padding-left:14px;font-size:14px;\"></p><table cellpadding=\"5\" cellspacing=\"0\" border=\"1\" bordercolor=\"#CCCCCC\" style=\"font-size:14px; table-layout: fixed;word-break: break-word;\" width=\"80%\"><colgroup><col width=\"13%\">  <col width=\"14%\"></colgroup><tbody><tr><th>序号</th><th>用户ID</th><th>用户姓名</th><th>创建Issue数</th><th>收到Issue数</th><th>修改Issue数</th><th>完成率</th></tr><tr><td>"+ir.getId()+"</td><td>"+ir.getUserid()+"</td><td>"+ir.getName()+"</td><td>"+ir.getCreateNum()+"</td><td>"+ir.getModifiNum()+"</td><td>\r\n" + 
+				"            <span style=\"border-bottom: 1px dashed rgb(204, 204, 204); position: relative;\" t=\"5\" times=\"\" isout=\"0\">"+ir.getFinishNum()+"</span></td><td>"+ir.getRateString()+"<br></td></tr></tbody></table><p></p>\r\n" + 
 				"        <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\"><span style=\"color: rgb(51, 51, 51); font-size: 14px;\">祝您生活愉快，工作顺利。</span></p>\r\n" + 
 				"        <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\"><span style=\"color: rgb(51, 51, 51); font-size: 14px;\"><br>\r\n" + 
 				"        </span></p>\r\n" + 
@@ -170,14 +170,14 @@ public class EmailMessage {
 				"        \r\n" + 
 				"        \r\n" + 
 				"        \r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/bqQfVz5yrrGYSXMvKr.cqZBufDlVyAnhODQa3YayIK5XHxqiVcGpDXCq8TMXIMfbzE8rHn6qGq1RRQV2ta4L46JUpJMYcPJcjFtbJu1TxOU!/b&bo=rgGuAQAAAAABByA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/bqQfVz5yrrGYSXMvKr.cqVHMn2JSBs6LfGgpQwP4kn7NoPsAY.Ogmaik8s38bqRBD6Qznzxx1T1wiGAeJ3jotC3jB.*fU4AlPHlcIgsB1t4!/b&bo=rgGuAQAAAAABByA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/bqQfVz5yrrGYSXMvKr.cqUw6G*2T28e2jaP51NbYPXRtushxmniH2AXKTl4HpvpoSAsekGeh7fcIG3VHn3nUqpsK7Nm2q4DGKo1J31QOyIY!/b&bo=rgGuAQAAAAABByA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/bqQfVz5yrrGYSXMvKr.cqWq4MWkhY0jAOIwXSMwXGNRINjOYJAnEl25BI.B5X68j2L6mrYeNg6rEzoKxWHYUQZvE*7G.NfDlWF9tdIJK45U!/b&bo=rgGuAQAAAAABByA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/bqQfVz5yrrGYSXMvKr.cqWZi*T4w7x0rhnqLdkQPnrl5.r3pO2irdOKei5KoEkM07bv86BHZS1HPUhYo1ggE0zopRwdyVQ1kilZY3namBaY!/b&bo=rgGuAQAAAAABByA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/bqQfVz5yrrGYSXMvKr.cqauxQwTKVhZXikar*QQ2.E.xOZn9Xh3GSoPsudAHBelI84U1IQvsY7ZsBSTYhuFn**w02AeawxTBL..ZCqdgWJ0!/b&bo=rgGuAQAAAAABByA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/TmEUgtj9EK6.7V8ajmQrEETE0bS*BazEFvGim9yZajNujm*Q9CB8FmlI58ev4XJCFpabjXxA5MKfMiB12SvQRyEmnqfkAMffgQGxcCmopPc!/b&bo=rgGuAQAAAAABFzA!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
-				"                                                    <img src=\"http://m.qpic.cn/psc?/693897396/TmEUgtj9EK6.7V8ajmQrEITwoPKLIm0Ln77nKqIxbBXgbyKbnRgd8P*4aEsMIYsH3*C9xatj7AQMu4ZjEpNBmguCOgi0ZA.fPBynDtmXRms!/b&bo=VgNpAwAAAAABFw8!&rf=viewer_4\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"https://7975-yuncloud-123-1301997245.tcb.qcloud.la/Icon/user_image.jpg?sign=9f9d56521d6e7ba57afcf1cfcea13a30&t=1588948688\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/7.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/6.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/5.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/4.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/3.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/2.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
+				"                                                    <img src=\"100.2.176.58:8081/pic/1.jpg\" style=\"margin-top: 10px;width: 64px;height: 64px;\">\r\n" + 
 				"\r\n" + 
 				"                                                    <br>\r\n" + 
 				"                                                    <p id=\"cTMail-rights2\" style=\"max-width: 100%; margin:auto;font-size:12px;color:#999;text-align:center;line-height:22px;\">联系我们的团队成员获取更多技术问题\r\n" + 
