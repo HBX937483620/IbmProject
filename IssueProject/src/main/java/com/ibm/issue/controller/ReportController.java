@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,9 +38,10 @@ public class ReportController {
 	 * 创建issue表接口
 	 * @param issue
 	 * @return
+	 * @throws MessagingException 
 	 */
 	@PostMapping("createReport")
-	public Integer create(@RequestBody ReportWithBLOBs issue ) {
+	public Integer create(@RequestBody ReportWithBLOBs issue ) throws MessagingException {
 		return reportService.createReport(issue);	
 	}
 	
