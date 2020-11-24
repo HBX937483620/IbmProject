@@ -2,12 +2,15 @@ package com.ibm.issue.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,35 +25,8 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 	
-	@Value("${filepath.file.root.path}")
-    private String fileRootPath;
 	
-	@PostMapping("fileUpload")
-	public String fileUpload(@RequestBody MultipartFile[] files ) {
-		System.out.println(ReportController.class.getClassLoader().toString());
-		String filePath = "";
-        // 多文件上传
-		System.out.println();
-        for (MultipartFile file : files){
-            // 上传简单文件名
-            String originalFilename = file.getOriginalFilename();
-            // 存储路径
-             filePath = new StringBuilder(fileRootPath)
-                    .append(System.currentTimeMillis()+".png")
-                    .toString();
-             System.out.println(filePath);
-            try {
-                // 保存文件
-                file.transferTo(new File(filePath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-		return "";
-	}
 
-	
 	@PostMapping("file")
 	public String file(@RequestBody MultipartFile[] files ) {
 		return reportService.file(files);

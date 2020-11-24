@@ -3,9 +3,12 @@ package com.ibm.issue.service;
 //import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,9 +28,7 @@ import com.ibm.issue.pojo.ReportExample;
 import com.ibm.issue.pojo.ReportWithBLOBs;
 import com.ibm.issue.pojo.User;
 
-import com.ibm.issue.pojo.UserPage;
 
-import com.ibm.issue.pojo.UserExample;
 
 import com.ibm.issue.pojo.ReportExample.Criteria;
 import com.ibm.issue.pojo.ReportPage;
@@ -40,10 +41,42 @@ public class ReportService {
 	private UserMapper userMapper;
 	@Autowired
 	private UserAndIdentityMapper mapper;
+	@Value("${web.upload-path}")
+    private static String fileRootPath;
 	
-	
-	public String file(MultipartFile[] files) {
-		return "";
+	/**
+	 * 文件上传方法
+	 * @param files
+	 * @return
+	 */
+	public static String file(MultipartFile[] files) {
+		String filePath = "";
+		String url = "";
+        // 多文件上传
+		System.out.println();
+        for (MultipartFile file : files){
+            // 上传简单文件名
+            String originalFilename = file.getOriginalFilename();
+            // 存储路径
+            long name = System.currentTimeMillis();
+             filePath = new StringBuilder(fileRootPath)
+                    .append(name+".png")
+                    .toString();
+             System.out.println(filePath);
+             url = url + name + ";";
+            try {
+                // 保存文件
+                file.transferTo(new File(filePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String[] split = url.split(";");
+        for (int i = 0; i < split.length; i++) {
+			String string = split[i];
+			System.out.println(string);
+		}
+		return url;
 	}
 
 	/**
@@ -59,7 +92,10 @@ public class ReportService {
 		String string = currentTimeMillis.toString();
 		String issueid = string.substring(string.length() - 6);
 		issue.setIssueid(issueid);
-		return reportMapper.insert(issue);
+		if (issue.getFiles() != null) {
+			issue.setUrl(file(issue.getFiles()));
+		}
+		return reportMapper.insertSelective(issue);
 	}
 
 	/**

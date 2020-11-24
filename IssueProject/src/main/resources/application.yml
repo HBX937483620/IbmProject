@@ -3,7 +3,7 @@ server:
 spring:
   web:
     resources: # 指定静态资源的路径
-        static-locations: classpath:/static/
+        static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
   devtools:
     restart:
       enabled: true
@@ -44,14 +44,12 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     
-    
 
 
 #设置文件路径
-filepath:
- file:
-  root:
-    path: "D:\\pic\\" #存储路径
+web:
+  upload-path: D:/pic/
+
 
 
   

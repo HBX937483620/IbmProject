@@ -18,6 +18,7 @@
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="planDate" jdbcType="DATE" property="plandate" />
     <result column="endDate" jdbcType="DATE" property="enddate" />
+     <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ibm.issue.pojo.ReportWithBLOBs">
     <!--
@@ -241,6 +242,9 @@
       <if test="solution != null">
         solution,
       </if>
+      <if test="url != null">
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -284,6 +288,9 @@
       </if>
       <if test="solution != null">
         #{solution,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
