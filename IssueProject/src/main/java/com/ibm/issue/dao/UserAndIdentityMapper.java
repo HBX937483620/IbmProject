@@ -2,6 +2,7 @@ package com.ibm.issue.dao;
 
 import java.util.List;
 
+import com.ibm.issue.pojo.AllMessage;
 import com.ibm.issue.pojo.IssueReport;
 import com.ibm.issue.pojo.ReportPage;
 import com.ibm.issue.pojo.ReportWithBLOBs;
@@ -13,7 +14,6 @@ public interface UserAndIdentityMapper {
 	
 	List<User> findUserAndIdentity(UserPage user);
 	
-
 	List<ReportPage> findReportAndState(ReportPage r);
 	
 	List<ReportWithBLOBs> findReportAndState2(ReportWithBLOBs r);
@@ -21,5 +21,9 @@ public interface UserAndIdentityMapper {
 	List<IssueReport> findIssueReport(User user);
 	
 	IssueReport findIssueReportToSend(User user);
+	
+	AllMessage findUserAll();
+	
+	AllMessage findIssueAll();
 
 }

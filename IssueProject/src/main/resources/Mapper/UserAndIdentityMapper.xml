@@ -77,7 +77,8 @@
 		user.id,
 		user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
 		from user,identity
-		where user.permission = identity.pid
+		where user.permission = identity.pid AND
+		user.permission !=3
 		<if test="userid != null">
 			AND userId like concat('%', #{userid}, '%')
 		</if>
@@ -91,7 +92,8 @@
 		select
 		user.id,user.userId,user.name,user.email,user.password,user.signUp,user.userState,identity.position
 		from user,identity
-		where user.permission = identity.pid
+		where user.permission = identity.pid AND
+		user.permission !=3
 		<if test="user != null">
 			<if test="user.userid != null">
 				AND user.userId like concat('%', #{user.userid}, '%')
@@ -156,7 +158,8 @@
 		user.name,
 		(SELECT COUNT(report.id) FROM
 		report WHERE report.creator=user.userId) as createNum ,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as
+		(SELECT
+		COUNT(report.id) FROM report WHERE report.modifier=user.userId) as
 		modifiNum ,
 		(SELECT COUNT(report.id) FROM report WHERE
 		report.modifier=user.userId and report.state = 3) as finishNum,
@@ -165,49 +168,105 @@
 		report.modifier=user.userId) as completeRate
 		FROM
 		user,report
+		WHERE
+		user.permission = 1
+		<!--<choose> <when test="userid != null and userid != '' and (name==null 
+			or name == '')"> WHERE user.userId like concat('%', #{userid}, '%') </when> 
+			<when test="name != null and name != '' and (userid==null or userid == '' 
+			)"> WHERE user.name like concat('%', #{name}, '%') </when> <when test="userid 
+			!= null and userid != '' and name != null and name != '' "> WHERE user.userId 
+			like concat('%', #{userid}, '%') AND user.name like concat('%', #{name}, 
+			'%') </when> <otherwise> </otherwise> </choose> <if test="userid != null 
+			and userid != '' "> WHERE user.userId like concat('%', #{userid}, '%') </if> 
+			<if test="name != null and name != '' "> WHERE user.name like concat('%', 
+			#{name}, '%') </if> -->
 		<choose>
-			<when test="userid != null and userid != ''  and  (name==null or name == '')">
-				WHERE user.userId like concat('%', #{userid}, '%')
-			</when>
-			<when test="name != null  and name != '' and  (userid==null or userid == '' )">
-				WHERE user.name like concat('%', #{name}, '%')
-			</when>
-			<when test="userid != null and userid != '' and name != null  and name != '' ">
-			    WHERE user.userId like concat('%', #{userid}, '%') AND user.name like concat('%', #{name}, '%')
-			</when>
+			<when
+				test="userid 
+			!= null and userid != '' and (name==null or name == '')"> AND user.userId
+				like concat('%', #{userid}, '%') </when>
+			<when
+				test="name != null and name 
+			!= '' and (userid==null or userid == '' )"> AND user.name like concat('%',
+				#{name}, '%') </when>
+			<when
+				test="userid != null and userid != '' and name 
+			!= null and name != '' "> AND user.userId like concat('%', #{userid}, '%')
+				AND user.name
+				like concat('%', #{name}, '%') </when>
 			<otherwise>
 			</otherwise>
 		</choose>
-		<!--   <if test="userid != null and userid != '' ">
-			WHERE user.userId like concat('%', #{userid}, '%')
-		</if>
-		<if test="name != null  and name != '' ">
-			WHERE user.name like concat('%', #{name}, '%')
-		</if> -->
 		GROUP BY
 		user.id;
 	</select>
-	
-	
-		<select id="findIssueReportToSend" resultMap="IssueReport">
+
+
+	<select id="findIssueReportToSend" resultType="IssueReport">
 		SELECT
 		user.id,
 		user.userId,
 		user.name,
 		(SELECT COUNT(report.id) FROM
-		report WHERE report.creator=user.userId) as createNum ,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as
+		report WHERE
+		report.creator=user.userId) as createNum ,
+		(SELECT COUNT(report.id)
+		FROM report WHERE report.modifier=user.userId) as
 		modifiNum ,
-		(SELECT COUNT(report.id) FROM report WHERE
-		report.modifier=user.userId and report.state = 3) as finishNum,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId
-		and report.state = 3)/(SELECT COUNT(report.id) FROM report WHERE
-		report.modifier=user.userId) as completeRate
+		(SELECT
+		COUNT(report.id) FROM report WHERE
+		report.modifier=user.userId and
+		report.state = 3) as finishNum,
+		(SELECT COUNT(report.id) FROM report
+		WHERE report.modifier=user.userId
+		and report.state = 3)/(SELECT
+		COUNT(report.id) FROM report WHERE
+		report.modifier=user.userId) as
+		completeRate
 		FROM
 		user,report
 		WHERE user.userId = #{userid}
 		GROUP BY
 		user.id;
+	</select>
+
+
+	<!-- 用于查询所有情况的映射 -->
+	<resultMap id="AllMessage"
+		type="com.ibm.issue.pojo.AllMessage">
+		<result column="commonNum" jdbcType="INTEGER"
+			property="commonNum" />
+		<result column="manageNum" jdbcType="INTEGER"
+			property="manageNum" />
+		<result column="adminNum" jdbcType="INTEGER"
+			property="adminNum" />
+		<result column="createNum" jdbcType="INTEGER"
+			property="createNum" />
+		<result column="modefiNum" jdbcType="INTEGER"
+			property="modefiNum" />
+		<result column="finishNum" jdbcType="INTEGER"
+			property="finishNum" />
+
+	</resultMap>
+
+	<select id="findUserAll"
+		resultType="AllMessage">
+		SELECT
+		COUNT(IF(user.permission=1,1,null)) as commonNum,
+		COUNT(IF(user.permission=2,1,null)) as manageNum,
+		COUNT(IF(user.permission=3,1,null)) as adminNum
+		FROM
+		user;
+	</select>
+
+	<select id="findIssueAll"
+		resultMap="AllMessage">
+		SELECT
+		COUNT(IF(report.state=1,1,null)) as createNum,
+		COUNT(IF(report.state=2,1,null)) as modefiNum,
+		COUNT(IF(report.state=3,1,null)) as finishNum
+		FROM
+		report;
 	</select>
 
 

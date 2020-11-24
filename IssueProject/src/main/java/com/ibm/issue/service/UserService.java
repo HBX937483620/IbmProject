@@ -7,7 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.ibm.issue.dao.UserAndIdentityMapper;
 import com.ibm.issue.dao.UserMapper;
+import com.ibm.issue.pojo.AllMessage;
 import com.ibm.issue.pojo.User;
 import com.ibm.issue.pojo.UserExample;
 import com.ibm.issue.pojo.UserExample.Criteria;
@@ -17,16 +20,34 @@ import com.ibm.issue.pojo.UserExample.Criteria;
 public class UserService {
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserAndIdentityMapper mapper;
+	
+	
 
+	
+	/**
+	 * 用于返回但钱用户的修改issue数和完成数
+	 * @return
+	 */
+	public String getUser(User user) {
+		return JSON.toJSONString(mapper.findIssueReportToSend(user));
+	}
 	
 	/**
 	 * 用于测试是否成功返回数据
 	 * @return
 	 */
-	public User getUser() {
-		System.out.println(System.currentTimeMillis());
-		return userMapper.selectByPrimaryKey(1);
+	public String getAll() {
+		AllMessage findIssueAll = mapper.findIssueAll();
+		AllMessage findUserAll = mapper.findUserAll();
+		findIssueAll.setCommonNum(findUserAll.getCommonNum());
+		findIssueAll.setManageNum(findUserAll.getManageNum());
+		findIssueAll.setAdminNum(findUserAll.getAdminNum());
+		return JSON.toJSONString(findIssueAll);
 	}
+	
 	
 	/**
 	 * 修改用户信息

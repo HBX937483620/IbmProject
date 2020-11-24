@@ -18,9 +18,14 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/getUser")
-	public User getUser() {
-		return userService.getUser();
+	@PostMapping("/getUser")
+	public String getUser(@RequestBody User user) {
+		return userService.getUser(user);
+	}
+	
+	@PostMapping("/getAll")
+	public String getAll() {
+		return userService.getAll();
 	}
 	
 	@PostMapping("/updateUser")
