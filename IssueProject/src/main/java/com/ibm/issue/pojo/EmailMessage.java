@@ -27,6 +27,7 @@ public class EmailMessage {
     
 	
 	public static String getMessage(String need) {
+
 		String message = "<div id=\"qm_con_body\"><div id=\"mailContentContainer\" class=\"qmbox qm_con_body_content qqmail_webmail_only\" style=\"\"><div style=\"text-align:center;background:#f1f4f6;padding-bottom:30px;\">\r\n" + 
 				"    <table width=\"640\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0 auto;\"><tbody><tr><td>\r\n" + 
 				"        <div style=\"width:640px;font:24px/42px helvetica,'Hiragino Sans GB','Microsoft YaHei','微软雅黑','宋体';color:#606060;background:#f1f4f6;text-align:center;\">\r\n" + 

@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 
@@ -40,17 +41,16 @@ import com.ibm.issue.pojo.UserExample;
 import com.ibm.issue.pojo.ReportExample.Criteria;
 import com.ibm.issue.pojo.ReportPage;
 
-
 @Service
 public class ReportService {
 	@Autowired
 	private ReportMapper reportMapper;
 	@Autowired
 	private UserMapper userMapper;
-	
 	@Autowired
 	private UserAndIdentityMapper mapper;
 	
+
 	@Value("${spring.mail.username}")
     private String mailFrom;
 	
@@ -106,10 +106,28 @@ public class ReportService {
 	String issueid = string.substring(string.length()-6);
 	issue.setIssueid(issueid);
 	return reportMapper.insert(issue);
+	
+	
+	}
+
+	
+	
+	public String file(MultipartFile[] files) {
+		return "";
 	}
 
 	/**
+	 * 创建人创建issue表
+	 * 
+	 * @param issue
+	 * @return
+	 */
+	
+
+	
+	/**
 	 * 点击详情查看issue報表
+	 * 
 	 * @param issue
 	 * @return
 	 */
@@ -117,12 +135,12 @@ public class ReportService {
 		ReportExample reportExample = new ReportExample();
 		Criteria createCriteria = reportExample.createCriteria();
 		createCriteria.andIssueidEqualTo(issue.getIssueid());
-		return reportMapper.selectByExampleWithBLOBs(reportExample);		
+		return reportMapper.selectByExampleWithBLOBs(reportExample);
 	}
-	
-	
+
 	/**
 	 * 修改人填写解决方案
+	 * 
 	 * @param issue
 	 * @return
 	 */
@@ -135,10 +153,10 @@ public class ReportService {
 		report.setState(2);
 		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
-	
 
 	/**
 	 * 创建人决定是否退回修改
+	 * 
 	 * @param issue
 	 * @return
 	 */
@@ -148,34 +166,34 @@ public class ReportService {
 		Criteria criteria = reportExample.createCriteria();
 		criteria.andIssueidEqualTo(issue.getIssueid());
 		ReportWithBLOBs report = new ReportWithBLOBs();
-		if(issue.getFlag().equals("1")) {
+		if (issue.getFlag().equals("1")) {
 			report.setState(1);
-		}else {
+		} else {
 			Date date = new Date(System.currentTimeMillis());
 			report.setEnddate(date);
 			report.setState(3);
 		}
 		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
-	
-	
-	
+
+
+
+
+
 	public String selectLikeByReport(ReportPage reportPage) {
-		//使用插件分页查询
+		// 使用插件分页查询
 		System.out.println(reportPage.getPage());
 		System.out.println(reportPage.getRows());
-		PageHelper.startPage(reportPage.getPage(),reportPage.getRows());
+		PageHelper.startPage(reportPage.getPage(), reportPage.getRows());
 
-		
-		//建立多表查询和模糊查询
+		// 建立多表查询和模糊查询
 		List<ReportPage> reportFind = mapper.findReportAndState(reportPage);
 
-		
-		//转化为json
+		// 转化为json
 		String list = JSON.toJSONString(reportFind);
-        PageInfo info = new PageInfo(reportFind);
-        long total = info.getTotal();
-        String json = "{\"total\":"+total+",\"rows\":"+list+" }";
+		PageInfo info = new PageInfo(reportFind);
+		long total = info.getTotal();
+		String json = "{\"total\":" + total + ",\"rows\":" + list + " }";
 		return json;
 	}
 
@@ -187,18 +205,16 @@ public class ReportService {
 	public String findIssueReport(User user) {
 		List<IssueReport> findIssueReport = mapper.findIssueReport(user);
 		for (IssueReport issueReport : findIssueReport) {
-			if(issueReport.getModifiNum() == 0) {
+			if (issueReport.getModifiNum() == 0) {
 				issueReport.setCompleteRate(0.00);
-				Double completeRate = (issueReport.getCompleteRate()*100.00);
-				issueReport.setRateString(completeRate.toString()+"%");
-			}else {
-				Double completeRate = (issueReport.getCompleteRate()*100.00);
-				issueReport.setRateString(completeRate.toString()+"%");
+				Double completeRate = (issueReport.getCompleteRate() * 100.00);
+				issueReport.setRateString(completeRate.toString() + "%");
+			} else {
+				Double completeRate = (issueReport.getCompleteRate() * 100.00);
+				issueReport.setRateString(completeRate.toString() + "%");
 			}
 		}
 		return JSON.toJSONString(findIssueReport);
 	}
-	
-
 
 }

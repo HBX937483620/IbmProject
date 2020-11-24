@@ -54,10 +54,14 @@
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="userId" jdbcType="VARCHAR" property="userid" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
-		<result column="createNum" jdbcType="INTEGER" property="createNum" />
-		<result column="modifiNum" jdbcType="INTEGER" property="modifiNum" />
-		<result column="finishNum" jdbcType="INTEGER" property="finishNum" />
-		<result column="completeRate" jdbcType="DOUBLE" property="completeRate" />
+		<result column="createNum" jdbcType="INTEGER"
+			property="createNum" />
+		<result column="modifiNum" jdbcType="INTEGER"
+			property="modifiNum" />
+		<result column="finishNum" jdbcType="INTEGER"
+			property="finishNum" />
+		<result column="completeRate" jdbcType="DOUBLE"
+			property="completeRate" />
 		<association property="report"
 			javaType="com.ibm.issue.pojo.Report">
 			<result column="creator" property="creator" jdbcType="VARCHAR" />
@@ -150,18 +154,36 @@
 		user.id,
 		user.userId,
 		user.name,
-		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId) as createNum , 
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as modifiNum ,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and report.state = 3) as finishNum,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and report.state = 3)/(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as completeRate
+		(SELECT COUNT(report.id) FROM
+		report WHERE report.creator=user.userId) as createNum ,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId) as
+		modifiNum ,
+		(SELECT COUNT(report.id) FROM report WHERE
+		report.modifier=user.userId and report.state = 3) as finishNum,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId
+		and report.state = 3)/(SELECT COUNT(report.id) FROM report WHERE
+		report.modifier=user.userId) as completeRate
 		FROM
 		user,report
-		<if test="userid != null and userid != '' ">
+		<choose>
+			<when test="userid != null and userid != ''  and  (name==null or name == '')">
+				WHERE user.userId like concat('%', #{userid}, '%')
+			</when>
+			<when test="name != null  and name != '' and  (userid==null or userid == '' )">
+				WHERE user.name like concat('%', #{name}, '%')
+			</when>
+			<when test="userid != null and userid != '' and name != null  and name != '' ">
+			    WHERE user.userId like concat('%', #{userid}, '%') AND user.name like concat('%', #{name}, '%')
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		<!--   <if test="userid != null and userid != '' ">
 			WHERE user.userId like concat('%', #{userid}, '%')
 		</if>
-		<if test="name != null  and name != ''">
+		<if test="name != null  and name != '' ">
 			WHERE user.name like concat('%', #{name}, '%')
-		</if>
+		</if> -->
 		GROUP BY
 		user.id;
 	</select>

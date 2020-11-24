@@ -1,6 +1,9 @@
 server:
   port: 8081
 spring:
+  web:
+    resources: # 指定静态资源的路径
+        static-locations: classpath:/static/
   devtools:
     restart:
       enabled: true
@@ -17,10 +20,14 @@ spring:
             required: true
           ssl: 
             enable: true  #开启ssl安全
+  servlet:
+    multipart:
+      max-file-size: 200MB #单个文件上传大小
+      max-request-size: 600MB #连续上传文件大小
             
   datasource:
     username: root 
-    password: root
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/issue?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
     
@@ -36,6 +43,15 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+    
+    
+
+
+#设置文件路径
+filepath:
+ file:
+  root:
+    path: "D:\\pic\\" #存储路径
 
 
   
