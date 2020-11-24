@@ -3,9 +3,17 @@ package com.ibm.issue.service;
 //import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.swing.plaf.synth.SynthScrollPaneUI;
+
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -18,6 +26,7 @@ import com.ibm.issue.dao.UserAndIdentityMapper;
 
 import com.ibm.issue.dao.ReportMapper;
 import com.ibm.issue.dao.UserMapper;
+import com.ibm.issue.pojo.EmailMessage;
 import com.ibm.issue.pojo.IssueReport;
 import com.ibm.issue.pojo.Report;
 import com.ibm.issue.pojo.ReportExample;
@@ -42,12 +51,54 @@ public class ReportService {
 	@Autowired
 	private UserAndIdentityMapper mapper;
 	
+	@Value("${spring.mail.username}")
+    private String mailFrom;
+	
+	@Autowired
+	private JavaMailSender sendEmail;
+	
 /**
  * 创建人创建issue表
  * @param issue
  * @return
+ * @throws MessagingException 
  */
-	public Integer createReport(ReportWithBLOBs issue) {
+	public Integer createReport(ReportWithBLOBs issue) throws MessagingException {
+		
+		User user = new User();
+		user.setUserid(issue.getModifier());
+		
+		UserExample userExample = new UserExample();
+		com.ibm.issue.pojo.UserExample.Criteria criteria = userExample.createCriteria();
+		criteria.andUseridEqualTo(issue.getModifier());
+		List<User> selectByExample = userMapper.selectByExample(userExample);
+
+		
+		List<IssueReport> findIssueReport = mapper.findIssueReport(user);
+		for (IssueReport issueReport : findIssueReport) {
+			if(issueReport.getModifiNum() == 0) {
+				issueReport.setCompleteRate(0.00);
+				Double completeRate = (issueReport.getCompleteRate()*100.00);
+				issueReport.setRateString(completeRate.toString()+"%");
+			}else {
+				Double completeRate = (issueReport.getCompleteRate()*100.00);
+				issueReport.setRateString(completeRate.toString()+"%");
+			}
+		}
+		
+		
+		MimeMessage mimeMessage = sendEmail.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+		
+	//邮件设置
+			helper.setSubject("issue事务通知");
+			helper.setText(EmailMessage.sendSession(),true);
+			helper.setTo(selectByExample.get(0).getEmail());
+			helper.setFrom(mailFrom);
+			sendEmail.send(mimeMessage);
+			System.out.println(selectByExample.get(0).getEmail());
+			
+			
 	Date date = new Date(System.currentTimeMillis());
 	issue.setCreatedate(date);
 	Long currentTimeMillis = System.currentTimeMillis();
@@ -107,51 +158,6 @@ public class ReportService {
 		return reportMapper.updateByExampleSelective(report, reportExample);
 	}
 	
-
-//	//根据用户姓名ID查询
-//	public String queryByUserIdName(String[] a) {
-//		System.out.println("????????????????????");
-//		String userId=a[0];
-//		String userName=a[1];
-//		System.out.println(userId);
-//		System.out.println(userName);
-//		ReportExample reportExample = new ReportExample();
-//		com.ibm.issue.pojo.ReportExample.Criteria queryReport = reportExample.createCriteria();
-//		
-//		String jsonString="";
-//		if(userName!="") {
-//			System.out.println("执行1");
-//			userName="%"+userName+"%";
-//			queryReport.andCreatorLike(userName);
-//			List<Report> selectByExample = reportMapper.selectByExample(reportExample);
-//			jsonString=JSON.toJSONString(selectByExample);
-//		}
-//		else if(userId!="") {
-//			System.out.println("执行2");
-//			//根据Id模糊查询获得用户名
-//			userId="%"+userId+"%";
-//			System.out.println(userId);
-//			UserExample userExample=new UserExample();
-//			com.ibm.issue.pojo.UserExample.Criteria queryUser=userExample.createCriteria();
-//			queryUser.andUseridLike(userId);
-//			List<User> selectByExample = userMapper.selectByExample(userExample);
-//			for (User user : selectByExample) {
-////				reportExample.clear();
-//				queryReport.andCreatorEqualTo(user.getName());
-//				
-//				System.out.println("准备找的名字"+user.getName());
-//				
-//				List<Report> selectByExample2 = reportMapper.selectByExample(reportExample);
-//				
-//				jsonString+=JSON.toJSONString(selectByExample2);
-//				
-//				System.out.println("草草草草草"+jsonString);
-//			}
-//		}
-//		return jsonString;
-//	}
-
-	
 	
 	
 	public String selectLikeByReport(ReportPage reportPage) {
@@ -173,6 +179,11 @@ public class ReportService {
 		return json;
 	}
 
+	/**
+	 * 模糊查询用户issue的各种数据（创建数等）
+	 * @param user
+	 * @return
+	 */
 	public String findIssueReport(User user) {
 		List<IssueReport> findIssueReport = mapper.findIssueReport(user);
 		for (IssueReport issueReport : findIssueReport) {
