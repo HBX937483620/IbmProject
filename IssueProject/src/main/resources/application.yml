@@ -49,6 +49,8 @@ pagehelper:
 #设置文件路径
 web:
   upload-path: D:/pic/
+  user-path: D:/pic/user/
+  issue-path: D:/pic/issue/
 
 
 

@@ -1,11 +1,13 @@
 package com.ibm.issue.service;
 
-
-
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.ibm.issue.dao.UserAndIdentityMapper;
@@ -15,28 +17,29 @@ import com.ibm.issue.pojo.User;
 import com.ibm.issue.pojo.UserExample;
 import com.ibm.issue.pojo.UserExample.Criteria;
 
-
 @Service
 public class UserService {
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@Autowired
 	private UserAndIdentityMapper mapper;
-	
-	
 
-	
+	@Value("${web.user-path}")
+	private String fileRootPath;
+
 	/**
 	 * 用于返回但钱用户的修改issue数和完成数
+	 * 
 	 * @return
 	 */
 	public String getUser(User user) {
 		return JSON.toJSONString(mapper.findIssueReportToSend(user));
 	}
-	
+
 	/**
 	 * 用于测试是否成功返回数据
+	 * 
 	 * @return
 	 */
 	public String getAll() {
@@ -47,10 +50,10 @@ public class UserService {
 		findIssueAll.setAdminNum(findUserAll.getAdminNum());
 		return JSON.toJSONString(findIssueAll);
 	}
-	
-	
+
 	/**
 	 * 修改用户信息
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -59,10 +62,11 @@ public class UserService {
 		Criteria updateUser = userExample.createCriteria();
 		updateUser.andUseridEqualTo(user.getUserid());
 		
-		//查询原用户信息
+
+		// 查询原用户信息
 		List<User> userFind = userMapper.selectByExample(userExample);
 		User userGet = userFind.get(0);
-		//修改
+		// 修改
 		if (user.getName() != null) {
 			userGet.setName(user.getName());
 		}
@@ -72,13 +76,12 @@ public class UserService {
 		if (user.getPassword() != null) {
 			userGet.setPassword(user.getPassword());
 		}
-		
-		//执行修改语句保存到数据库
-				int isUpdate = userMapper.updateByExampleSelective(user, userExample);
-				return isUpdate;
+
+		// 执行修改语句保存到数据库
+		int isUpdate = userMapper.updateByExampleSelective(user, userExample);
+		return isUpdate;
 	}
-	
-	
+
 	/**
 	 * 返回修改完后的信息
 	 */
@@ -88,6 +91,29 @@ public class UserService {
 		updateUser.andUseridEqualTo(user.getUserid());
 		return userMapper.selectByExample(userExample).get(0);
 	}
-	
-	
+
+	/**
+	 * 头像
+	 */
+	public String getUserPic(MultipartFile file) {
+		String filePath = "";
+		String url = "";
+		System.out.println(fileRootPath);
+		//获取文件元名称
+//		String originalFilename = file.getOriginalFilename();
+		// 存储路径
+		long name = System.currentTimeMillis();
+		filePath = new StringBuilder(fileRootPath).append(name + ".png").toString();
+		
+		url = name + "";
+		try {
+			// 保存文件
+			file.transferTo(new File(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return url;
+	}
+
 }

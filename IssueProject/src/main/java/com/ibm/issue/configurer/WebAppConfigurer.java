@@ -1,7 +1,9 @@
 package com.ibm.issue.configurer;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,4 +19,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
         //registry.addResourceHandler("/assets/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/assets/");
         registry.addResourceHandler("/pic/**").addResourceLocations("file:"+ baseUploadPath);
     }
+    
+   
+
 }

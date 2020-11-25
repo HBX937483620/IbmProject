@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ibm.issue.pojo.User;
 import com.ibm.issue.service.UserService;
@@ -36,6 +37,11 @@ public class UserController {
 	@PostMapping("/getUserInfo")
 	public User getUpdateUser(@RequestBody User user) {
 		return userService.getUpdateUser(user);
+	}
+	
+	@PostMapping("/getUserPic")
+	public String getUserPic(@RequestBody MultipartFile file) {
+		return userService.getUserPic(file);
 	}
 	
 	

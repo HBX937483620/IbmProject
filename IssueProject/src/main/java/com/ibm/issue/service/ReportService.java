@@ -53,7 +53,7 @@ public class ReportService {
 	@Autowired
 	private UserAndIdentityMapper mapper;
 
-	@Value("${web.upload-path}")
+	@Value("${web.issue-path}")
 	private static String fileRootPath;
 
 	@Value("${spring.mail.username}")
