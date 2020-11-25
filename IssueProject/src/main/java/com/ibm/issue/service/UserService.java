@@ -30,7 +30,6 @@ public class UserService {
 
 	/**
 	 * 用于返回但钱用户的修改issue数和完成数
-	 * 
 	 * @return
 	 */
 	public String getUser(User user) {

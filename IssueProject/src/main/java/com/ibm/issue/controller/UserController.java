@@ -41,7 +41,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/getUserPic")
-	public String getUserPic(@RequestParam(value = "userid")String userid,
+	public String getUserPic(@RequestParam(value = "userid",required = false )String userid,
 			@RequestParam(value = "file",required = false)MultipartFile file) {
 		return "http://100.2.176.58:8081/pic/user/"+userService.getUserPic(userid,file)+".png";
 	}

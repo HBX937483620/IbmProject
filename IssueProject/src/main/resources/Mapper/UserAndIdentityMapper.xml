@@ -242,7 +242,7 @@
 		createNum
 		FROM
 		user,report
-		WHERE user.userid = "123"
+		WHERE user.userid = #{userid}
 		GROUP BY
 		user.id;
 	</select>

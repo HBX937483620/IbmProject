@@ -126,8 +126,6 @@ public class RegisterService {
 				return "{\"flag\":\""+flag+"\"}";
 			}
 		}
-		
-		
-		
+			
 	}
 }
