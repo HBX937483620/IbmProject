@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.ibm.issue.pojo.Report;
 import com.ibm.issue.pojo.ReportWithBLOBs;
 import com.ibm.issue.service.ReportService;
 
@@ -30,8 +31,8 @@ public class ReportController {
 	
 
 	@PostMapping("file")
-	public String file(@RequestBody MultipartFile[] files ) {
-		return reportService.file(files);
+	public String file(@RequestParam MultipartFile[] files,Report issue ) {
+		return reportService.file(files, issue);
 	}
 	
 	/**

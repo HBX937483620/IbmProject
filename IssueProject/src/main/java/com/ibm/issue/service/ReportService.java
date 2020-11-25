@@ -68,7 +68,13 @@ public class ReportService {
 	 * @param files
 	 * @return
 	 */
-	public  String file(MultipartFile[] files) {
+	public  String file(MultipartFile[] files,Report issue) {
+		ReportExample reportExample = new ReportExample();
+		Criteria criteria = reportExample.createCriteria();
+		criteria.andIssueidEqualTo(issue.getIssueid());
+		ReportWithBLOBs report = new ReportWithBLOBs();
+		
+		
 		String filePath = "";
 		String url = "";
 		// 多文件上传
@@ -93,6 +99,9 @@ public class ReportService {
 			String string = split[i];
 			System.out.println(string);
 		}
+		report.setUrl(url);
+		report.setIssueid(issue.getIssueid());
+		reportMapper.updateByExampleSelective(report, reportExample);
 		return url;
 	}
 
