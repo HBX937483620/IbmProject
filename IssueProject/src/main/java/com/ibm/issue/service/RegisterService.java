@@ -115,8 +115,9 @@ public class RegisterService {
 			//判断密码是否正确和状态是否为激活
 			if (password.equals(inputPassword) && userstate.equalsIgnoreCase("激活")){
 				flag = "1";
+				String url = "http://100.2.176.58:8081/pic/user/"+userFind.get(0).getUrl()+".png";
 				return "{\"name\":\"" +userFind.get(0).getName()+ "\",\"permission\":\""
-			+userFind.get(0).getPermission()+"\",\"flag\":\""+flag+"\"}";
+			+userFind.get(0).getPermission()+"\",\"flag\":\""+flag+"\",\"url\":\"" +url +"\" }";
 			}else if (password.equals(inputPassword) && userstate.equalsIgnoreCase("注销")) {
 				flag="2";
 				return "{\"flag\":\""+flag+"\"}";

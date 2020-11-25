@@ -68,10 +68,10 @@ public class ReportService {
 	 * @param files
 	 * @return
 	 */
-	public  String file(MultipartFile[] files,Report issue) {
+	public  String file(MultipartFile[] files,String issueId) {
 		ReportExample reportExample = new ReportExample();
 		Criteria criteria = reportExample.createCriteria();
-		criteria.andIssueidEqualTo(issue.getIssueid());
+		criteria.andIssueidEqualTo(issueId);
 		ReportWithBLOBs report = new ReportWithBLOBs();
 		
 		
@@ -97,10 +97,11 @@ public class ReportService {
 		String[] split = url.split(";");
 		for (int i = 0; i < split.length; i++) {
 			String string = split[i];
-			System.out.println(string);
 		}
+		
+		System.err.println(url);
+		System.err.println(issueId);
 		report.setUrl(url);
-		report.setIssueid(issue.getIssueid());
 		reportMapper.updateByExampleSelective(report, reportExample);
 		return url;
 	}

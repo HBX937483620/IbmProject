@@ -31,8 +31,10 @@ public class ReportController {
 	
 
 	@PostMapping("file")
-	public String file(@RequestParam MultipartFile[] files,Report issue ) {
-		return reportService.file(files, issue);
+	public String file(@RequestParam(value = "files",required = false) MultipartFile[] files,
+			@RequestParam(value = "issueId",required = false) String issueId ) {
+		System.out.println("files="+files);
+		return reportService.file(files, issueId);
 	}
 	
 	/**

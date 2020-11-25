@@ -101,6 +101,8 @@ public class User implements Serializable {
      * @return
      */
     private Identity identity;
+    
+    //文件上传
     private MultipartFile file;
     private String url;
     
