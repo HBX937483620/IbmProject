@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,8 +41,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/getUserPic")
-	public String getUserPic(@RequestBody MultipartFile file) {
-		return userService.getUserPic(file);
+	public String getUserPic(@RequestParam(value = "userid")String userid,
+			@RequestParam(value = "file",required = false)MultipartFile file) {
+		return userService.getUserPic(userid,file);
 	}
 	
 	

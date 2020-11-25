@@ -54,7 +54,7 @@ public class ReportService {
 	private UserAndIdentityMapper mapper;
 
 	@Value("${web.issue-path}")
-	private static String fileRootPath;
+	private  String fileRootPath;
 
 	@Value("${spring.mail.username}")
 	private String mailFrom;
@@ -68,7 +68,7 @@ public class ReportService {
 	 * @param files
 	 * @return
 	 */
-	public static String file(MultipartFile[] files) {
+	public  String file(MultipartFile[] files) {
 		String filePath = "";
 		String url = "";
 		// 多文件上传
@@ -145,6 +145,8 @@ public class ReportService {
 		helper.setFrom(mailFrom);
 		sendEmail.send(mimeMessage);
 		System.out.println(selectByExample.get(0).getEmail());
+		
+		
 		
 		return insert;
 

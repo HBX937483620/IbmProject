@@ -231,6 +231,23 @@
 	</select>
 
 
+	<select id="findIssueReportToSend2" resultType="IssueReport">
+		SELECT
+		user.id,
+		user.userId,
+		user.name,
+		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId and
+		report.state = 2) AS createNum,
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId ) AS
+		modifiNum
+		FROM
+		user,report
+		WHERE user.userid = "123"
+		GROUP BY
+		user.id;
+	</select>
+
+
 	<!-- 用于查询所有情况的映射 -->
 	<resultMap id="AllMessage"
 		type="com.ibm.issue.pojo.AllMessage">
@@ -249,8 +266,7 @@
 
 	</resultMap>
 
-	<select id="findUserAll"
-		resultType="AllMessage">
+	<select id="findUserAll" resultType="AllMessage">
 		SELECT
 		COUNT(IF(user.permission=1,1,null)) as commonNum,
 		COUNT(IF(user.permission=2,1,null)) as manageNum,
@@ -259,8 +275,7 @@
 		user;
 	</select>
 
-	<select id="findIssueAll"
-		resultMap="AllMessage">
+	<select id="findIssueAll" resultMap="AllMessage">
 		SELECT
 		COUNT(IF(report.state=1,1,null)) as createNum,
 		COUNT(IF(report.state=2,1,null)) as modefiNum,

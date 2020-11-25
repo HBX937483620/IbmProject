@@ -34,7 +34,7 @@ public class UserService {
 	 * @return
 	 */
 	public String getUser(User user) {
-		return JSON.toJSONString(mapper.findIssueReportToSend(user));
+		return JSON.toJSONString(mapper.findIssueReportToSend2(user));
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class UserService {
 	/**
 	 * 头像
 	 */
-	public String getUserPic(MultipartFile file) {
+	public String getUserPic(String userid,MultipartFile file) {
 		String filePath = "";
 		String url = "";
 		System.out.println(fileRootPath);
@@ -112,6 +112,14 @@ public class UserService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//把用户头像保存到数据库
+		UserExample example = new UserExample();
+		Criteria create = example.createCriteria();
+		create.andUseridEqualTo(userid);
+		User user = new User();
+		user.setUrl(url);
+		userMapper.updateByExampleSelective(user, example);
 
 		return url;
 	}

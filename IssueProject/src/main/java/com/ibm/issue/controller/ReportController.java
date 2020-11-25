@@ -41,7 +41,7 @@ public class ReportController {
 	 * @throws MessagingException 
 	 */
 	@PostMapping("createReport")
-	public Integer create(@RequestBody ReportWithBLOBs issue ) throws MessagingException {
+	public Integer create(@RequestBody ReportWithBLOBs issue) throws MessagingException {
 		return reportService.createReport(issue);	
 	}
 	

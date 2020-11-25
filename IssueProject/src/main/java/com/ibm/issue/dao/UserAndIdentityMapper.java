@@ -21,6 +21,7 @@ public interface UserAndIdentityMapper {
 	List<IssueReport> findIssueReport(User user);
 	
 	IssueReport findIssueReportToSend(User user);
+	IssueReport findIssueReportToSend2(User user);
 	
 	AllMessage findUserAll();
 	
