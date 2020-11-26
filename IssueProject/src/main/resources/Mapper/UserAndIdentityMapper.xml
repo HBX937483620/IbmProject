@@ -238,7 +238,8 @@
 		user.name,
 		(SELECT COUNT(report.id) FROM report WHERE report.creator=user.userId and
 		report.state = 2) AS modifiNum,
-		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId ) AS
+		(SELECT COUNT(report.id) FROM report WHERE report.modifier=user.userId and
+		report.state = 1) AS
 		createNum
 		FROM
 		user,report

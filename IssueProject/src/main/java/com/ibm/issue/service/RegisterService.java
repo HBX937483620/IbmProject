@@ -72,6 +72,7 @@ public class RegisterService {
 	public Integer register(User user) {
 		Date date = new Date(System.currentTimeMillis());
 		user.setSignup(date);
+		user.setUrl("default");
 		int result = userMapper.insert(user);
 		return result;
 	}
