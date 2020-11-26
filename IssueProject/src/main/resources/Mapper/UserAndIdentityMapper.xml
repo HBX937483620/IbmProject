@@ -125,12 +125,12 @@
 			AND modifier like concat('%', #{modifier}, '%')
 		</if>
 
-		<if test="createStartDate != null and createEndDate == null">
+		<!--  <if test="createStartDate != null and createEndDate == null">
 			AND createdate &gt; #{createStartDate}
 		</if>
 		<if test="createStartDate == null and createEndDate != null">
 			AND createdate &lt; #{createEndDate}
-		</if>
+		</if>-->
 		<if test="createStartDate != null and createEndDate != null">
 			AND createdate between #{createStartDate} and
 			#{createEndDate}
@@ -139,15 +139,20 @@
 		<if test="endStartDate != null and endEndDate != null">
 			AND enddate
 			between #{endStartDate} and #{endEndDate}
-		</if>
-		<if test="endStartDate != null and endEndDate == null">
+		 </if>
+		 <!--<if test="endStartDate != null and endEndDate == endStartDate">
+			AND enddate
+			= #{endStartDate} 
+		 </if>
+		 <if test="endStartDate != null and endEndDate == null">
 			AND enddate
 			&gt; #{endStartDate}
 		</if>
 		<if test="endStartDate = null and endEndDate != null">
 			AND enddate
 			&lt; #{endEndDate}
-		</if>
+		</if>-->
+		order by createdate desc
 	</select>
 
 

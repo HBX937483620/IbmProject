@@ -139,10 +139,10 @@ public class ReportService {
 		if (issueReport.getModifiNum() == 0) {
 			issueReport.setCompleteRate(0.00);
 			Double completeRate = (issueReport.getCompleteRate() * 100.00);
-			issueReport.setRateString(completeRate.toString() + "%");
+			issueReport.setRateString(String.format("%.2f",completeRate) + "%");
 		} else {
 			Double completeRate = (issueReport.getCompleteRate() * 100.00);
-			issueReport.setRateString(completeRate.toString() + "%");
+			issueReport.setRateString(String.format("%.2f",completeRate) + "%");
 		}
 
 		MimeMessage mimeMessage = sendEmail.createMimeMessage();
@@ -263,10 +263,10 @@ public class ReportService {
 			if (issueReport.getModifiNum() == 0) {
 				issueReport.setCompleteRate(0.00);
 				Double completeRate = (issueReport.getCompleteRate() * 100.00);
-				issueReport.setRateString(completeRate.toString() + "%");
+				issueReport.setRateString(String.format("%.2f",completeRate) + "%");
 			} else {
 				Double completeRate = (issueReport.getCompleteRate() * 100.00);
-				issueReport.setRateString(completeRate.toString() + "%");
+				issueReport.setRateString(String.format("%.2f",completeRate) + "%");
 			}
 		}
 		return JSON.toJSONString(findIssueReport);

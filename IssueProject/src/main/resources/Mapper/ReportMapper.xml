@@ -12,11 +12,11 @@
     <result column="level" jdbcType="CHAR" property="level" />
     <result column="version" jdbcType="VARCHAR" property="version" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="createDate" jdbcType="DATE" property="createdate" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
     <result column="modifier" jdbcType="VARCHAR" property="modifier" />
     <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="planDate" jdbcType="DATE" property="plandate" />
-    <result column="endDate" jdbcType="DATE" property="enddate" />
+    <result column="planDate" jdbcType="TIMESTAMP" property="plandate" />
+    <result column="endDate" jdbcType="TIMESTAMP" property="enddate" />
      <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ibm.issue.pojo.ReportWithBLOBs">
@@ -188,8 +188,8 @@
       content, solution)
     values (#{id,jdbcType=INTEGER}, #{issueid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR}, #{level,jdbcType=CHAR}, #{version,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{createdate,jdbcType=DATE}, #{modifier,jdbcType=VARCHAR}, 
-      #{state,jdbcType=INTEGER}, #{plandate,jdbcType=DATE}, #{enddate,jdbcType=DATE}, 
+      #{creator,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{plandate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR}, #{solution,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ibm.issue.pojo.ReportWithBLOBs">
@@ -268,7 +268,7 @@
         #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createdate != null">
-        #{createdate,jdbcType=DATE},
+        #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="modifier != null">
         #{modifier,jdbcType=VARCHAR},
@@ -277,10 +277,10 @@
         #{state,jdbcType=INTEGER},
       </if>
       <if test="plandate != null">
-        #{plandate,jdbcType=DATE},
+        #{plandate,jdbcType=TIMESTAMP},
       </if>
       <if test="enddate != null">
-        #{enddate,jdbcType=DATE},
+        #{enddate,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -332,7 +332,7 @@
         creator = #{record.creator,jdbcType=VARCHAR},
       </if>
       <if test="record.createdate != null">
-        createDate = #{record.createdate,jdbcType=DATE},
+        createDate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.modifier != null">
         modifier = #{record.modifier,jdbcType=VARCHAR},
@@ -341,10 +341,10 @@
         state = #{record.state,jdbcType=INTEGER},
       </if>
       <if test="record.plandate != null">
-        planDate = #{record.plandate,jdbcType=DATE},
+        planDate = #{record.plandate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.enddate != null">
-        endDate = #{record.enddate,jdbcType=DATE},
+        endDate = #{record.enddate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -373,11 +373,11 @@
       level = #{record.level,jdbcType=CHAR},
       version = #{record.version,jdbcType=VARCHAR},
       creator = #{record.creator,jdbcType=VARCHAR},
-      createDate = #{record.createdate,jdbcType=DATE},
+      createDate = #{record.createdate,jdbcType=TIMESTAMP},
       modifier = #{record.modifier,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=INTEGER},
-      planDate = #{record.plandate,jdbcType=DATE},
-      endDate = #{record.enddate,jdbcType=DATE},
+      planDate = #{record.plandate,jdbcType=TIMESTAMP},
+      endDate = #{record.enddate,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=LONGVARCHAR},
       solution = #{record.solution,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
@@ -397,11 +397,11 @@
       level = #{record.level,jdbcType=CHAR},
       version = #{record.version,jdbcType=VARCHAR},
       creator = #{record.creator,jdbcType=VARCHAR},
-      createDate = #{record.createdate,jdbcType=DATE},
+      createDate = #{record.createdate,jdbcType=TIMESTAMP},
       modifier = #{record.modifier,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=INTEGER},
-      planDate = #{record.plandate,jdbcType=DATE},
-      endDate = #{record.enddate,jdbcType=DATE}
+      planDate = #{record.plandate,jdbcType=TIMESTAMP},
+      endDate = #{record.enddate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -432,7 +432,7 @@
         creator = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createdate != null">
-        createDate = #{createdate,jdbcType=DATE},
+        createDate = #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="modifier != null">
         modifier = #{modifier,jdbcType=VARCHAR},
@@ -441,10 +441,10 @@
         state = #{state,jdbcType=INTEGER},
       </if>
       <if test="plandate != null">
-        planDate = #{plandate,jdbcType=DATE},
+        planDate = #{plandate,jdbcType=TIMESTAMP},
       </if>
       <if test="enddate != null">
-        endDate = #{enddate,jdbcType=DATE},
+        endDate = #{enddate,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -467,11 +467,11 @@
       level = #{level,jdbcType=CHAR},
       version = #{version,jdbcType=VARCHAR},
       creator = #{creator,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=DATE},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
       modifier = #{modifier,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
-      planDate = #{plandate,jdbcType=DATE},
-      endDate = #{enddate,jdbcType=DATE},
+      planDate = #{plandate,jdbcType=TIMESTAMP},
+      endDate = #{enddate,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR},
       solution = #{solution,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -488,11 +488,11 @@
       level = #{level,jdbcType=CHAR},
       version = #{version,jdbcType=VARCHAR},
       creator = #{creator,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=DATE},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
       modifier = #{modifier,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
-      planDate = #{plandate,jdbcType=DATE},
-      endDate = #{enddate,jdbcType=DATE}
+      planDate = #{plandate,jdbcType=TIMESTAMP},
+      endDate = #{enddate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
