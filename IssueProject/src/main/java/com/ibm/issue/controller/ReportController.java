@@ -74,7 +74,7 @@ public class ReportController {
  */
 	@PostMapping("verify")
 	public int verification(@RequestBody ReportWithBLOBs issue) {
-		System.out.println(111);
+		
 		return reportService.verify(issue);
 	}
 	

@@ -9,7 +9,7 @@
 		<result column="email" jdbcType="VARCHAR" property="email" />
 		<result column="password" jdbcType="VARCHAR"
 			property="password" />
-		<result column="signUp" jdbcType="DATE" property="signup" />
+		<result column="signUp" jdbcType="TIMESTAMP" property="signup" />
 		<result column="permission" jdbcType="INTEGER"
 			property="permission" />
 		<result column="userState" jdbcType="CHAR" property="userstate" />
@@ -33,13 +33,13 @@
 		<result column="level" jdbcType="CHAR" property="level" />
 		<result column="version" jdbcType="VARCHAR" property="version" />
 		<result column="creator" jdbcType="VARCHAR" property="creator" />
-		<result column="createDate" jdbcType="DATE"
+		<result column="createDate" jdbcType="TIMESTAMP"
 			property="createdate" />
 		<result column="modifier" jdbcType="VARCHAR"
 			property="modifier" />
 		<result column="state" jdbcType="INTEGER" property="state" />
-		<result column="planDate" jdbcType="DATE" property="plandate" />
-		<result column="endDate" jdbcType="DATE" property="enddate" />
+		<result column="planDate" jdbcType="TIMESTAMP" property="plandate" />
+		<result column="endDate" jdbcType="TIMESTAMP" property="enddate" />
 		<association property="issuestate"
 			javaType="com.ibm.issue.pojo.Issuestate">
 			<id column="id" property="id" jdbcType="INTEGER" />

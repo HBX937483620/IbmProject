@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.swing.plaf.synth.SynthScrollPaneUI;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -145,15 +145,32 @@ public class ReportService {
 			issueReport.setRateString(String.format("%.2f",completeRate) + "%");
 		}
 
-		MimeMessage mimeMessage = sendEmail.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+		
 
+		new Thread( new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				MimeMessage mimeMessage = sendEmail.createMimeMessage();
+				MimeMessageHelper helper;
+				try {
+					helper = new MimeMessageHelper(mimeMessage, true);
+					helper.setSubject("issue事务通知");
+					helper.setText(EmailMessage.sendSession(issueReport, issue.getCreator()), true);
+					helper.setTo(selectByExample.get(0).getEmail());
+					helper.setFrom(mailFrom);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				sendEmail.send(mimeMessage);
+			}
+		}).start();
 		// 邮件设置
-		helper.setSubject("issue事务通知");
-		helper.setText(EmailMessage.sendSession(issueReport, issue.getCreator()), true);
-		helper.setTo(selectByExample.get(0).getEmail());
-		helper.setFrom(mailFrom);
-		sendEmail.send(mimeMessage);
+		
+		
 		System.out.println(selectByExample.get(0).getEmail());
 		
 		

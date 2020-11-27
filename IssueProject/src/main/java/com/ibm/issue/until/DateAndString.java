@@ -21,11 +21,6 @@ public class DateAndString {
 	}
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * java.sql.Date的日期转化
 	 * @param date
